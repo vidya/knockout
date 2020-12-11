@@ -6,6 +6,7 @@ import React, { useState } from 'react'
 
 import {Button, ButtonGroup, Popover, OverlayTrigger, ToggleButton} from 'react-bootstrap'
 
+import './style.scss'
 /***
  Overview
  --------
@@ -72,12 +73,11 @@ const HelpInstructions = () => {
                             <Popover.Title as="h3">{`${title}`}</Popover.Title>
                             <Popover.Content>
                                 {`${textStrings[title]}`}
-                                <strong>Holy guacamole!</strong> Check this info.
                             </Popover.Content>
                         </Popover>
                     }
                 >
-                    <Button variant="secondary">{title}</Button>
+                    <Button variant="secondary" className={"helpButton"}>{title}</Button>
                 </OverlayTrigger>
             ))}
         </>
@@ -101,6 +101,7 @@ const FirstMover = (props) => {
                     {radios.map((radio, idx) => (
                         <ToggleButton
                             key={idx}
+                            className={'playerToggleButton'}
                             type="radio"
                             variant="secondary"
                             name="radio"
@@ -122,9 +123,14 @@ export default function NimZap(props) {
     console.log("NimZap: start")
 
     return (
-        <div>
-            <HelpInstructions />
-            <FirstMover />
+        <div id={'topContainer'}>
+            <div className={'helpInstructions'}>
+                <HelpInstructions />
+            </div>
+
+            <div id={'firstMover'}>
+                <FirstMover />
+            </div>
         </div>
     );
 }
