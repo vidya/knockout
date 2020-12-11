@@ -33,29 +33,27 @@ import {Button, ButtonGroup, Popover, OverlayTrigger, ToggleButton} from 'react-
  */
 
 const HelpInstructions = () => {
-
     const help = `
-    You will be presented with a game board consisting of 3 heaps of coins.
- Each heap contains at least one coin and at most 9 coins.
+                    You will be presented with a game board consisting of 3 heaps of coins.
+                    Each heap contains at least one coin and at most 9 coins.
 
- There are two players in the game - you and the computer.
- Each player makes moves alternately.
+                    There are two players in the game - you and the computer.
+                    Each player makes moves alternately.
 
- On each move, a player chooses a non-empty heap and removes
- one or more coins from the heap.
+                    On each move, a player chooses a non-empty heap and removes
+                    one or more coins from the heap.
 
- The player who takes the last coin on the board is declared
- to have won the game.
-
+                    The player who takes the last coin on the board is declared
+                    to have won the game.
     `
     const instructions = `
-At the start of the game, you can choose to go first or let the
- computer make the first move.
-
- Heaps of coins are referred to by letters 'a b c'.
-
- You indicate your move by entering a string like 'b3',
- meaning you want to remove 3 coins from heap b.
+                            At the start of the game, you can choose to go first or let the
+                             computer make the first move.
+                            
+                             Heaps of coins are referred to by letters 'a b c'.
+                            
+                             You indicate your move by entering a string like 'b3',
+                             meaning you want to remove 3 coins from heap b.
      `
 
     const textStrings = {
