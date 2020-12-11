@@ -7,17 +7,13 @@ import React, { useState, useEffect } from 'react'
 import {ToggleButton} from 'react-bootstrap'
 import {ButtonGroup} from 'react-bootstrap'
 
-
-export default function NimZap(props) {
-    const [checked, setChecked] = useState(false);
+const FirstMover = (props) => {
     const [radioValue, setRadioValue] = useState('1');
 
     const radios = [
         { name: 'PLAYER', value: '1' },
         { name: 'COMPUTER', value: '2' },
     ];
-
-    console.log("NimZap: start")
 
     return (
         <>
@@ -41,5 +37,13 @@ export default function NimZap(props) {
                 </ButtonGroup>
             </fieldset>
         </>
+    );
+}
+
+export default function NimZap(props) {
+    console.log("NimZap: start")
+
+    return (
+        <FirstMover />
     );
 }
