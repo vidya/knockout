@@ -4,17 +4,16 @@
 
 import React, { useState } from 'react'
 
-import {Button, ButtonGroup, Popover, OverlayTrigger,
-    ToggleButton, ToggleButtonGroup} from 'react-bootstrap'
+// import {Button, ButtonGroup, Popover, OverlayTrigger,
+//     ToggleButton, ToggleButtonGroup} from 'react-bootstrap'
 
 import './style.scss'
 
-const CoinRow = (props) => {
-    const [chosenNum, setChosenNum] = useState(0);
+const CoinRow = ({name, coinCount}) => {
+    // const [chosenNum, setChosenNum] = useState(0);
 
-    const coinCount = props.coinCount
+    // const coinCount = props.coinCount
     const choiceNums = [...Array(coinCount).keys()].map(n => n + 1)
-    const chosenNumStyle = {backgroundColor: 'lightgreen'}
 
     return (
         <>
@@ -31,10 +30,10 @@ const CoinRow = (props) => {
     );
 }
 
-const KeyPad = (props) => {
+const KeyPad = ({name, coinCount}) => {
     const [chosenNum, setChosenNum] = useState(0);
 
-    const coinCount = props.coinCount
+    // const coinCount = props.coinCount
     const choiceNums = [...Array(coinCount).keys()].map(n => n + 1)
     const chosenNumStyle = {backgroundColor: 'lightgreen'}
 
@@ -42,7 +41,8 @@ const KeyPad = (props) => {
         console.log(`choiceNumClick(): e: ${e}`)
         const cNum = parseInt(e.target.dataset.choice)
         setChosenNum(cNum)
-        console.log(`chosenNum: ${cNum}`)
+
+        console.log(`chosen: heap-count = ${name}-${cNum}`)
     }
 
     return (
@@ -65,15 +65,15 @@ const KeyPad = (props) => {
     );
 }
 
-export default function CoinHeap(props) {
+export default function CoinHeap({name, coinCount}) {
     console.log("CoinHeap: start")
 
     return (
         <div className={'heapContainer'}>
             <div className={'keyPad'}>
-                <h4 className={'heapName'}>{props.name}</h4>
-                <CoinRow coinCount={props.coinCount}/>
-                <KeyPad coinCount={props.coinCount}/>
+                <h4 className={'heapName'}>{name}</h4>
+                <CoinRow name={name} coinCount={coinCount}/>
+                <KeyPad name={name}  coinCount={coinCount}/>
             </div>
         </div>
     );
