@@ -36,14 +36,11 @@ export default function GameBoard(props) {
         }
     }
 
-    const hKeys = Array.from(heapMap.entries())
-    console.log(`hKeys = ${hKeys}`)
-
     return (
         <div className={'gameBoardContainer'}>
             <div className={'gameBoard'}>
                 {
-                    Array.from(heapMap.keys()).map((key, index) =>
+                    Array.from(heapMap.keys()).map(key =>
                         <CoinHeap name={`${key}`} coinCount={heapMap.get(key)} updateCoinCounts={updateCoinCounts}/>
                     )
                 }

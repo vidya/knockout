@@ -2,7 +2,7 @@
  * Created by J.Vidya Sagar on 12/11/20.
  */
 
-import React, { useState } from 'react'
+import React from 'react'
 
 import './style.scss'
 
@@ -25,15 +25,11 @@ const CoinRow = ({name, coinCount}) => {
 }
 
 const KeyPad = ({name, coinCount, updateCoinCounts}) => {
-    // const [chosenNum, setChosenNum] = useState(0);
-
     const choiceNums = [...Array(coinCount).keys()].map(n => n + 1)
-    const chosenNumStyle = {backgroundColor: 'lightgreen'}
 
     const choiceNumClick = e => {
         console.log(`choiceNumClick(): e: ${e}`)
         const cNum = parseInt(e.target.dataset.choice)
-        // setChosenNum(cNum)
 
         const letMap = {
             'A': 0,
