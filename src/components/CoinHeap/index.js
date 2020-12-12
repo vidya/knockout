@@ -24,7 +24,7 @@ const CoinRow = ({name, coinCount}) => {
     );
 }
 
-const KeyPad = ({name, coinCount}) => {
+const KeyPad = ({name, coinCount, updateCoinCounts}) => {
     const [chosenNum, setChosenNum] = useState(0);
 
     const choiceNums = [...Array(coinCount).keys()].map(n => n + 1)
@@ -35,6 +35,15 @@ const KeyPad = ({name, coinCount}) => {
         const cNum = parseInt(e.target.dataset.choice)
         setChosenNum(cNum)
 
+        const letMap = {
+            'A': 0,
+            'B': 1,
+            'C': 2,
+            'D': 3,
+            'E': 4
+        }
+
+        updateCoinCounts(letMap[name], cNum)
         console.log(`chosen: heap-count = ${name}-${cNum}`)
     }
 
@@ -58,7 +67,7 @@ const KeyPad = ({name, coinCount}) => {
     );
 }
 
-export default function CoinHeap({name, coinCount}) {
+export default function CoinHeap({name, coinCount, updateCoinCounts}) {
     console.log("CoinHeap: start")
 
     return (
@@ -66,7 +75,7 @@ export default function CoinHeap({name, coinCount}) {
             <div className={'keyPad'}>
                 <h4 className={'heapName'}>{name}</h4>
                 <CoinRow name={name} coinCount={coinCount}/>
-                <KeyPad name={name}  coinCount={coinCount}/>
+                <KeyPad name={name}  coinCount={coinCount} updateCoinCounts={updateCoinCounts}/>
             </div>
         </div>
     );
