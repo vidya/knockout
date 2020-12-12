@@ -7,6 +7,9 @@ import React, { useState } from 'react'
 import {Button, ButtonGroup, Popover, OverlayTrigger, ToggleButton} from 'react-bootstrap'
 
 import './style.scss'
+import CoinHeap from "../CoinHeap";
+import GameBoard from "../GameBoard";
+
 /***
  Overview
  --------
@@ -130,6 +133,10 @@ export default function NimZap(props) {
 
             <div id={'firstMover'}>
                 <FirstMover />
+            </div>
+
+            <div>
+                <GameBoard />
             </div>
         </div>
     );

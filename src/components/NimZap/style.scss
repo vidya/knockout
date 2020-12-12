@@ -20,12 +20,11 @@ div#topContainer {
   border: 2px solid blue;
   padding: 20px;
   margin: auto;
-  width: 60%;
+  width: 80%;
   background-color: blanchedalmond;
 }
 
 div.helpInstructions {
-  //border: 2px solid green;
   display: flex;
   flex-direction: row-reverse;
 }
@@ -34,14 +33,12 @@ button.helpButton {
 }
 
 div#firstMover {
-  //margin-top: 80px;
-  //margin-bottom: 30px;
-  margin: auto;
-  width: 60%;
+  margin-left: 5px;
+  width: 25%;
 }
 
 .playerToggleButton {
-  margin: 20px;
+  margin: 10px;
 }
 //---------------
 

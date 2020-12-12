@@ -1,0 +1,89 @@
+div.keyPad{
+  border: 2px solid purple;
+  padding: 5px;
+  //margin: auto;
+  margin-top: 10px;
+  margin-right: 10px;
+  background-color: lightgoldenrodyellow;
+  display: flex;
+  flex-direction: column;
+}
+
+ul.choiceNumList {
+  flex: 1;
+
+  display: flex;
+  flex-direction: row;
+
+  flex-wrap: wrap;
+  justify-self: center;
+  justify-content: center;
+
+  border: 1px solid blue;
+  padding: 10px;
+
+  list-style-type:none;
+  margin-bottom:  0px;
+
+  li.choiceNumItem {
+    flex: 1;
+
+    margin: 2px;
+    border: 1px solid blue;
+    border-radius: 5px;
+
+    padding: 3px;
+
+    text-align: center;
+  }
+
+  li.num:nth-child(3n) {
+    background: lightcyan;
+  }
+
+  li:hover {
+    border-style: dashed;
+  }
+}
+
+ul.coinList {
+  flex: 1;
+
+  display: flex;
+  flex-direction: row;
+
+  flex-wrap: wrap;
+  justify-self: center;
+  justify-content: center;
+
+  //border: 1px solid blue;
+  padding: 10px;
+  padding-bottom: 5px;
+
+  list-style-type:none;
+  margin-bottom:  0px;
+
+  li.coinListItem {
+    flex: 1;
+
+    margin: 2px;
+    border: 1px solid blue;
+    border-radius: 5px;
+
+    padding: 3px;
+    width: 10px;
+    height: 10px;
+    background-color: lightgreen;
+
+    text-align: center;
+  }
+
+  li.num:nth-child(3n) {
+    background: lightcyan;
+  }
+
+  li:hover {
+    border-style: dashed;
+  }
+}
+
