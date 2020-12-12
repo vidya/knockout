@@ -15,11 +15,11 @@ export default function GameBoard(props) {
     return (
         <div className={'gameBoardContainer'}>
             <div className={'gameBoard'}>
-                <CoinHeap coinCount={1}/>
-                <CoinHeap coinCount={1}/>
-                <CoinHeap coinCount={1}/>
-                <CoinHeap coinCount={1}/>
-                <CoinHeap coinCount={1}/>
+                <CoinHeap name={'A'} coinCount={1}/>
+                <CoinHeap name={'B'}  coinCount={3}/>
+                <CoinHeap name={'C'}  coinCount={7}/>
+                <CoinHeap name={'D'}  coinCount={5}/>
+                <CoinHeap name={'E'}  coinCount={8}/>
             </div>
         </div>
     );

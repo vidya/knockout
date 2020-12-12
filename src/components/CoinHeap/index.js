@@ -71,6 +71,7 @@ export default function CoinHeap(props) {
     return (
         <div className={'heapContainer'}>
             <div className={'keyPad'}>
+                <h4 className={'heapName'}>{props.name}</h4>
                 <CoinRow coinCount={props.coinCount}/>
                 <KeyPad coinCount={props.coinCount}/>
             </div>
