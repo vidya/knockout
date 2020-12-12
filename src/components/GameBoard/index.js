@@ -42,17 +42,7 @@ export default function GameBoard(props) {
     return (
         <div className={'gameBoardContainer'}>
             <div className={'gameBoard'}>
-                {/*<CoinHeap name={'X'} coinCount={coinCounts[0]} updateCoinCounts={updateCoinCounts}/>*/}
-                {/*<CoinHeap name={'B'}  coinCount={coinCounts[1]} updateCoinCounts={updateCoinCounts}/>*/}
-                {/*<CoinHeap name={'C'}  coinCount={coinCounts[2]} updateCoinCounts={updateCoinCounts}/>*/}
-
-                {/*<CoinHeap name={'D'}  coinCount={coinCounts[3]} updateCoinCounts={updateCoinCounts}/>*/}
-                {/*<CoinHeap name={'E'}  coinCount={coinCounts[4]} updateCoinCounts={updateCoinCounts}/>*/}
-
-                {/*<CoinHeap name={`${key}`} coinCount={`${value}`} updateCoinCounts={updateCoinCounts}/>*/}
-
                 {
-
                     Array.from(heapMap.keys()).map((key, index) =>
                         <CoinHeap name={`${key}`} coinCount={heapMap.get(key)} updateCoinCounts={updateCoinCounts}/>
                     )
