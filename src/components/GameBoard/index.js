@@ -27,15 +27,36 @@ export default function GameBoard(props) {
         console.log(`updateCoinCounts: (newCoinCounts, coinCounts) = (${newCoinCounts}, ${coinCounts})`)
     }
 
+    const names = ['A', 'B', 'C', 'D', 'E']
+    let heapMap = new Map()
+
+    for (const [index, name] of names.entries()) {
+        if (coinCounts[index] > 0) {
+            heapMap.set(name, coinCounts[index])
+        }
+    }
+
+    const hKeys = Array.from(heapMap.entries())
+    console.log(`hKeys = ${hKeys}`)
+
     return (
         <div className={'gameBoardContainer'}>
             <div className={'gameBoard'}>
-                <CoinHeap name={'A'} coinCount={coinCounts[0]} updateCoinCounts={updateCoinCounts}/>
-                <CoinHeap name={'B'}  coinCount={coinCounts[1]} updateCoinCounts={updateCoinCounts}/>
-                <CoinHeap name={'C'}  coinCount={coinCounts[2]} updateCoinCounts={updateCoinCounts}/>
+                {/*<CoinHeap name={'X'} coinCount={coinCounts[0]} updateCoinCounts={updateCoinCounts}/>*/}
+                {/*<CoinHeap name={'B'}  coinCount={coinCounts[1]} updateCoinCounts={updateCoinCounts}/>*/}
+                {/*<CoinHeap name={'C'}  coinCount={coinCounts[2]} updateCoinCounts={updateCoinCounts}/>*/}
 
-                <CoinHeap name={'D'}  coinCount={coinCounts[3]} updateCoinCounts={updateCoinCounts}/>
-                <CoinHeap name={'E'}  coinCount={coinCounts[4]} updateCoinCounts={updateCoinCounts}/>
+                {/*<CoinHeap name={'D'}  coinCount={coinCounts[3]} updateCoinCounts={updateCoinCounts}/>*/}
+                {/*<CoinHeap name={'E'}  coinCount={coinCounts[4]} updateCoinCounts={updateCoinCounts}/>*/}
+
+                {/*<CoinHeap name={`${key}`} coinCount={`${value}`} updateCoinCounts={updateCoinCounts}/>*/}
+
+                {
+
+                    Array.from(heapMap.keys()).map((key, index) =>
+                        <CoinHeap name={`${key}`} coinCount={heapMap.get(key)} updateCoinCounts={updateCoinCounts}/>
+                    )
+                }
             </div>
         </div>
     );
