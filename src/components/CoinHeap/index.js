@@ -4,15 +4,9 @@
 
 import React, { useState } from 'react'
 
-// import {Button, ButtonGroup, Popover, OverlayTrigger,
-//     ToggleButton, ToggleButtonGroup} from 'react-bootstrap'
-
 import './style.scss'
 
 const CoinRow = ({name, coinCount}) => {
-    // const [chosenNum, setChosenNum] = useState(0);
-
-    // const coinCount = props.coinCount
     const choiceNums = [...Array(coinCount).keys()].map(n => n + 1)
 
     return (
@@ -33,7 +27,6 @@ const CoinRow = ({name, coinCount}) => {
 const KeyPad = ({name, coinCount}) => {
     const [chosenNum, setChosenNum] = useState(0);
 
-    // const coinCount = props.coinCount
     const choiceNums = [...Array(coinCount).keys()].map(n => n + 1)
     const chosenNumStyle = {backgroundColor: 'lightgreen'}
 

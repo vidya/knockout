@@ -4,7 +4,6 @@
 
 import React, { useState } from 'react'
 
-import {Button, ButtonGroup, Popover, OverlayTrigger, ToggleButton} from 'react-bootstrap'
 import CoinHeap from "../CoinHeap";
 
 import './style.scss'

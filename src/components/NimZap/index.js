@@ -3,12 +3,10 @@
  */
 
 import React, { useState } from 'react'
-
 import {Button, ButtonGroup, Popover, OverlayTrigger, ToggleButton} from 'react-bootstrap'
+import GameBoard from "../GameBoard";
 
 import './style.scss'
-import CoinHeap from "../CoinHeap";
-import GameBoard from "../GameBoard";
 
 /***
  Overview
@@ -88,7 +86,7 @@ const HelpInstructions = () => {
 }
 
 
-const FirstMover = (props) => {
+const FirstMover = () => {
     const [radioValue, setRadioValue] = useState('1');
 
     const radios = [
@@ -114,7 +112,6 @@ const FirstMover = (props) => {
                         >
                             {radio.name}
                         </ToggleButton>
-
                     ))}
                 </ButtonGroup>
             </fieldset>
@@ -122,7 +119,7 @@ const FirstMover = (props) => {
     );
 }
 
-export default function NimZap(props) {
+export default function NimZap() {
     console.log("NimZap: start")
 
     return (
