@@ -16,8 +16,8 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
 }
 
-export default function GameBoard(props) {
-    console.log("GameBoard: start")
+export default function GameBoard({firstMover}) {
+    console.log(`GameBoard: start: firstMover = ${firstMover}`)
     const [coinCounts, setCoinCounts] = useState([...Array(5).keys()].map(n => getRandomInt(1, 10)));
 
     let moveInfo = {}

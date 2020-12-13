@@ -86,13 +86,24 @@ const HelpInstructions = () => {
 }
 
 
-const FirstMover = () => {
+const FirstMover = ({chooseFirstMover}) => {
     const [radioValue, setRadioValue] = useState('1');
 
     const radios = [
         { name: 'PLAYER', value: '1' },
         { name: 'COMPUTER', value: '2' },
     ];
+
+    const changeFirstMover = e => {
+        setRadioValue(e.currentTarget.value)
+
+        if (e.currentTarget.value === '1') {
+            chooseFirstMover('PLAYER')
+        }
+        else {
+            chooseFirstMover('COMPUTER')
+        }
+    }
 
     return (
         <>
@@ -108,7 +119,8 @@ const FirstMover = () => {
                             name="radio"
                             value={radio.value}
                             checked={radioValue === radio.value}
-                            onChange={(e) => setRadioValue(e.currentTarget.value)}
+                            // onChange={(e) => setRadioValue(e.currentTarget.value)}
+                            onChange={changeFirstMover}
                         >
                             {radio.name}
                         </ToggleButton>
@@ -120,7 +132,13 @@ const FirstMover = () => {
 }
 
 export default function NimZap() {
-    console.log("NimZap: start")
+    const [firstMover, setFirstMover] = useState('Player');
+
+    const chooseFirstMover = (choice) => {
+        setFirstMover(choice)
+    }
+
+    console.log(`NimZap: start` )
 
     return (
         <div id={'topContainer'}>
@@ -129,11 +147,11 @@ export default function NimZap() {
             </div>
 
             <div id={'firstMover'}>
-                <FirstMover />
+                <FirstMover chooseFirstMover={chooseFirstMover}/>
             </div>
 
             <div>
-                <GameBoard />
+                <GameBoard firstMover={firstMover}/>
             </div>
         </div>
     );
