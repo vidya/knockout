@@ -119,7 +119,6 @@ const FirstMover = ({chooseFirstMover}) => {
                             name="radio"
                             value={radio.value}
                             checked={radioValue === radio.value}
-                            // onChange={(e) => setRadioValue(e.currentTarget.value)}
                             onChange={changeFirstMover}
                         >
                             {radio.name}
