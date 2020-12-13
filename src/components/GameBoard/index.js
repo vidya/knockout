@@ -20,27 +20,23 @@ export default function GameBoard(props) {
     console.log("GameBoard: start")
     const [coinCounts, setCoinCounts] = useState([...Array(5).keys()].map(n => getRandomInt(1, 10)));
 
-    let moveInfo = {
-        'Move #': 0,
-        'Made by': 'player-08',
-        'Before': 'A2-B7-C6-D2-E4',
-        'Move': 'B2',
-        'After': 'A2-B5-C6-D2-E4',
-    }
+    let moveInfo = {}
 
-    const names = ['A', 'B', 'C', 'D', 'E']
+    const heapNames = ['A', 'B', 'C', 'D', 'E']
 
-    const [movesLog, setMovesLog] = useState([moveInfo]);
+    const [movesLog, setMovesLog] = useState([]);
     const [moveNum, setMoveNum] = useState(0);
 
     const coinCountStr = (coinCounts) => {
-        const names = ['A', 'B', 'C', 'D', 'E']
+        // const names = ['A', 'B', 'C', 'D', 'E']
 
-        const str = coinCounts.map((v, index) => `${names[index]}${v}`).join("-")
+        const str = coinCounts.map((v, index) => `${heapNames[index]}${v}`).join("-")
         console.log(`coinCountStr(): (coinCounts, str) = (${coinCounts}, ${str})`)
 
         return str
     }
+
+    const moveStr = (heapNum, count) => `${heapNames[heapNum]}${count}`
 
     const updateCoinCounts = (heapNum, count) => {
         console.log(`updateCoinCounts: (heapNum, count) = (${heapNum}, ${count})`)
@@ -51,35 +47,32 @@ export default function GameBoard(props) {
         newCoinCounts[heapNum] -= count
         setCoinCounts([...Array(5).keys()].map(n => newCoinCounts[n]))
         console.log(`updateCoinCounts: (newCoinCounts, coinCounts) = (${newCoinCounts}, ${coinCounts})`)
+
         const afterCounts = coinCountStr(newCoinCounts)
 
         const newMoveNum  = moveNum  + 1
         setMoveNum(newMoveNum)
+
+        let newMovesLog = Array.from(movesLog)
         moveInfo = {
             'Move #': newMoveNum,
             'Made by': 'Player',
+
             'Before': beforeCounts,
-            'Move': `${names[heapNum]}${count}`,
+            'Move': moveStr(heapNum, count),
             'After': afterCounts,
         }
-        let newMovesLog = Array.from(movesLog)
         newMovesLog.push(moveInfo)
         setMovesLog(newMovesLog)
     }
 
-    // const names = ['A', 'B', 'C', 'D', 'E']
     let heapMap = new Map()
 
-    for (const [index, name] of names.entries()) {
+    for (const [index, name] of heapNames.entries()) {
         if (coinCounts[index] > 0) {
             heapMap.set(name, coinCounts[index])
         }
     }
-
-    let heapString = ''
-    heapMap.forEach((value, key) => {
-        heapString = `${heapString}-${key}${value}`
-    })
 
     return (
         <div className={'gameBoardContainer'}>
