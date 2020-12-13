@@ -28,8 +28,6 @@ export default function GameBoard(props) {
     const [moveNum, setMoveNum] = useState(0);
 
     const coinCountStr = (coinCounts) => {
-        // const names = ['A', 'B', 'C', 'D', 'E']
-
         const str = coinCounts.map((v, index) => `${heapNames[index]}${v}`).join("-")
         console.log(`coinCountStr(): (coinCounts, str) = (${coinCounts}, ${str})`)
 
