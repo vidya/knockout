@@ -88,12 +88,8 @@ export default function GameBoard({nextMover}) {
 
         // const beforeCounts = coinCountStr(coinCounts)
 
-        let newCoinCounts = coinCounts
+        let newCoinCounts = Array.from(coinCounts)
         newCoinCounts[heapNum] -= count
-        // setCoinCounts([...Array(5).keys()].map(n => newCoinCounts[n]))
-        // console.log(`makePlayerMove: (newCoinCounts, coinCounts) = (${newCoinCounts}, ${coinCounts})`)
-
-        // const afterCounts = coinCountStr(newCoinCounts)
 
         const newMoveNum  = moveNum  + 1
         setMoveNum(newMoveNum)
@@ -132,14 +128,8 @@ export default function GameBoard({nextMover}) {
 
         console.log(`\nMAKE-COMPUTER-MOVE(): (heapNum, count) = (${heapNum}, ${count})`)
 
-        // const beforeCounts = coinCountStr(coinCounts)
-
-        let newCoinCounts = coinCounts
+        let newCoinCounts = Array.from(coinCounts)
         newCoinCounts[heapNum] -= count
-        // setCoinCounts([...Array(5).keys()].map(n => newCoinCounts[n]))
-        // console.log(`makeComputerMove: (newCoinCounts, coinCounts) = (${newCoinCounts}, ${coinCounts})`)
-
-        // const afterCounts = coinCountStr(newCoinCounts)
 
         const newMoveNum  = moveNum  + 1
         setMoveNum(newMoveNum)
