@@ -16,18 +16,63 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
 }
 
-export default function GameBoard({firstMover}) {
-    const [mover, setMover] = useState(firstMover);
+// const FirstMover = ({chooseFirstMover}) => {
+//     const [radioValue, setRadioValue] = useState('1');
+//
+//     const radios = [
+//         { name: 'PLAYER', value: '1' },
+//         { name: 'COMPUTER', value: '2' },
+//     ];
+//
+//     const changeFirstMover = e => {
+//         setRadioValue(e.currentTarget.value)
+//
+//         if (e.currentTarget.value === '1') {
+//             chooseFirstMover('PLAYER')
+//         }
+//         else {
+//             chooseFirstMover('COMPUTER')
+//         }
+//     }
+//
+//     return (
+//         <>
+//             <fieldset>
+//                 <legend>First mover</legend>
+//                 <ButtonGroup toggle>
+//                     {radios.map((radio, idx) => (
+//                         <ToggleButton
+//                             key={idx}
+//                             className={'playerToggleButton'}
+//                             type="radio"
+//                             variant="secondary"
+//                             name="radio"
+//                             value={radio.value}
+//                             checked={radioValue === radio.value}
+//                             onChange={changeFirstMover}
+//                         >
+//                             {radio.name}
+//                         </ToggleButton>
+//                     ))}
+//                 </ButtonGroup>
+//             </fieldset>
+//         </>
+//     );
+// }
 
-    console.log(`GameBoard: start: firstMover = ${firstMover}`)
-    const [coinCounts, setCoinCounts] = useState([...Array(5).keys()].map(n => getRandomInt(1, 10)));
+// export default function GameBoard({firstMover}) {
+export default function GameBoard({nextMover}) {
+    const [mover, setMover] = useState(nextMover);
 
-    let moveInfo = {}
-
-    const heapNames = ['A', 'B', 'C', 'D', 'E']
+    const [coinCounts, setCoinCounts] = useState([...Array(5).keys()].map(_ => getRandomInt(1, 10)));
 
     const [movesLog, setMovesLog] = useState([]);
     const [moveNum, setMoveNum] = useState(0);
+
+    console.log(`GAME_BOARD: START --> GameBoard: start: mover = ${mover}`)
+
+    let moveInfo = {}
+    const heapNames = ['A', 'B', 'C', 'D', 'E']
 
     const coinCountStr = (coinCounts) => {
         const str = coinCounts.map((v, index) => `${heapNames[index]}${v}`).join("-")
@@ -38,17 +83,17 @@ export default function GameBoard({firstMover}) {
 
     const moveStr = (heapNum, count) => `${heapNames[heapNum]}${count}`
 
-    const updateCoinCounts = (heapNum, count) => {
-        console.log(`updateCoinCounts: (heapNum, count) = (${heapNum}, ${count})`)
+    const makePlayerMove = (heapNum, count) => {
+        console.log(`\nMAKE-PLAYER-MOVE(): (heapNum, count) = (${heapNum}, ${count})`)
 
-        const beforeCounts = coinCountStr(coinCounts)
+        // const beforeCounts = coinCountStr(coinCounts)
 
         let newCoinCounts = coinCounts
         newCoinCounts[heapNum] -= count
-        setCoinCounts([...Array(5).keys()].map(n => newCoinCounts[n]))
-        console.log(`updateCoinCounts: (newCoinCounts, coinCounts) = (${newCoinCounts}, ${coinCounts})`)
+        // setCoinCounts([...Array(5).keys()].map(n => newCoinCounts[n]))
+        // console.log(`makePlayerMove: (newCoinCounts, coinCounts) = (${newCoinCounts}, ${coinCounts})`)
 
-        const afterCounts = coinCountStr(newCoinCounts)
+        // const afterCounts = coinCountStr(newCoinCounts)
 
         const newMoveNum  = moveNum  + 1
         setMoveNum(newMoveNum)
@@ -56,18 +101,20 @@ export default function GameBoard({firstMover}) {
         let newMovesLog = Array.from(movesLog)
         moveInfo = {
             'Move #': newMoveNum,
-            // 'Made by': 'Player',
             'Made by': mover,
 
-            'Before': beforeCounts,
+            'Before': coinCountStr(coinCounts),
             'Move': moveStr(heapNum, count),
-            'After': afterCounts,
+            'After': coinCountStr(newCoinCounts),
         }
+
+        setCoinCounts([...Array(5).keys()].map(n => newCoinCounts[n]))
+        console.log(`makePlayerMove: (newCoinCounts, coinCounts) = (${newCoinCounts}, ${coinCounts})`)
+
         newMovesLog.push(moveInfo)
         setMovesLog(newMovesLog)
 
         setMover('COMPUTER')
-
     }
 
     const makeComputerMove = () => {
@@ -83,16 +130,16 @@ export default function GameBoard({firstMover}) {
             break
         }
 
-        console.log(`makeComputerMove: (heapNum, count) = (${heapNum}, ${count})`)
+        console.log(`\nMAKE-COMPUTER-MOVE(): (heapNum, count) = (${heapNum}, ${count})`)
 
-        const beforeCounts = coinCountStr(coinCounts)
+        // const beforeCounts = coinCountStr(coinCounts)
 
         let newCoinCounts = coinCounts
         newCoinCounts[heapNum] -= count
-        setCoinCounts([...Array(5).keys()].map(n => newCoinCounts[n]))
-        console.log(`updateCoinCounts: (newCoinCounts, coinCounts) = (${newCoinCounts}, ${coinCounts})`)
+        // setCoinCounts([...Array(5).keys()].map(n => newCoinCounts[n]))
+        // console.log(`makeComputerMove: (newCoinCounts, coinCounts) = (${newCoinCounts}, ${coinCounts})`)
 
-        const afterCounts = coinCountStr(newCoinCounts)
+        // const afterCounts = coinCountStr(newCoinCounts)
 
         const newMoveNum  = moveNum  + 1
         setMoveNum(newMoveNum)
@@ -100,18 +147,20 @@ export default function GameBoard({firstMover}) {
         let newMovesLog = Array.from(movesLog)
         moveInfo = {
             'Move #': newMoveNum,
-            // 'Made by': 'Player',
             'Made by': mover,
 
-            'Before': beforeCounts,
+            'Before': coinCountStr(coinCounts),
             'Move': moveStr(heapNum, count),
-            'After': afterCounts,
+            'After': coinCountStr(newCoinCounts),
         }
+
+        setCoinCounts([...Array(5).keys()].map(n => newCoinCounts[n]))
+        console.log(`makeComputerMove: (newCoinCounts, coinCounts) = (${newCoinCounts}, ${coinCounts})`)
+
         newMovesLog.push(moveInfo)
         setMovesLog(newMovesLog)
 
         setMover('PLAYER')
-
     }
 
     let heapMap = new Map()
@@ -139,13 +188,11 @@ export default function GameBoard({firstMover}) {
                 <div className={'gameBoard'}>
                     {
                         Array.from(heapMap.keys()).map(key =>
-                            <CoinHeap name={`${key}`} coinCount={heapMap.get(key)} updateCoinCounts={updateCoinCounts}/>
+                            <CoinHeap name={`${key}`} coinCount={heapMap.get(key)} updateCoinCounts={makePlayerMove}/>
                         )
                     }
                 </div>
             </div>
-
-
         )
     }
 
@@ -155,6 +202,7 @@ export default function GameBoard({firstMover}) {
 
     return (
         <div className={'gameBoardContainer'}>
+
             <MovesRecord/>
 
             <TickerTape  movesLog={movesLog}/>
@@ -162,7 +210,7 @@ export default function GameBoard({firstMover}) {
             <div className={'gameBoard'}>
                 {
                     Array.from(heapMap.keys()).map(key =>
-                        <CoinHeap name={`${key}`} coinCount={heapMap.get(key)} updateCoinCounts={updateCoinCounts}/>
+                        <CoinHeap name={`${key}`} coinCount={heapMap.get(key)} updateCoinCounts={makePlayerMove}/>
                     )
                 }
             </div>

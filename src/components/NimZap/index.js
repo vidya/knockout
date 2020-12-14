@@ -131,7 +131,7 @@ const FirstMover = ({chooseFirstMover}) => {
 }
 
 export default function NimZap() {
-    const [firstMover, setFirstMover] = useState('Player');
+    const [firstMover, setFirstMover] = useState('PLAYER');
 
     const chooseFirstMover = (choice) => {
         setFirstMover(choice)
@@ -146,11 +146,12 @@ export default function NimZap() {
             </div>
 
             <div id={'firstMover'}>
+                {/*<FirstMover chooseFirstMover={chooseFirstMover}/>*/}
                 <FirstMover chooseFirstMover={chooseFirstMover}/>
             </div>
 
             <div>
-                <GameBoard firstMover={firstMover}/>
+                <GameBoard nextMover={firstMover}/>
             </div>
         </div>
     );
