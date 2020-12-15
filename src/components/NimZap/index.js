@@ -132,6 +132,7 @@ const FirstMover = ({chooseFirstMover}) => {
 
 export default function NimZap() {
     const [firstMover, setFirstMover] = useState('PLAYER');
+    const [playAgain, setPlayAgain] = useState(true);
 
     const chooseFirstMover = (choice) => {
         setFirstMover(choice)
@@ -139,20 +140,36 @@ export default function NimZap() {
 
     console.log(`NimZap: start` )
 
-    return (
-        <div id={'topContainer'}>
-            <div className={'helpInstructions'}>
-                <HelpInstructions />
-            </div>
+    if (playAgain) {
+        return (
+            <div id={'topContainer'}>
+                <div className={'helpInstructions'}>
+                    <HelpInstructions />
+                </div>
 
-            <div id={'firstMover'}>
-                {/*<FirstMover chooseFirstMover={chooseFirstMover}/>*/}
-                <FirstMover chooseFirstMover={chooseFirstMover}/>
-            </div>
+                <div id={'firstMover'}>
+                    <FirstMover chooseFirstMover={chooseFirstMover}/>
+                </div>
 
-            <div>
-                <GameBoard nextMover={firstMover}/>
+                <div>
+                    <GameBoard nextMover={firstMover} setPlayAgain={setPlayAgain}/>
+                </div>
             </div>
-        </div>
-    );
+        );
+    }
+    else {
+        return (
+            <div id={'topContainer'}>
+                <div className={'helpInstructions'}>
+                    <HelpInstructions />
+                </div>
+
+                <div>
+                    <h2>Thank you for playing NimZap!</h2>
+                    <h4>Please visit again!</h4>
+                </div>
+            </div>
+        );
+
+    }
 }

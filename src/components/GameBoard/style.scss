@@ -10,3 +10,8 @@ div.gameBoard{
   display: flex;
   flex-direction: row;
 }
+
+button#playAgain {
+  background-color: lightgreen;
+  font-size: 1.2em;
+}

@@ -5,6 +5,7 @@
 import React, { useState } from 'react'
 
 import CoinHeap from "../CoinHeap";
+import {Button} from "react-bootstrap";
 
 import './style.scss'
 import MovesRecord from "../MovesRecord";
@@ -16,52 +17,8 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
 }
 
-// const FirstMover = ({chooseFirstMover}) => {
-//     const [radioValue, setRadioValue] = useState('1');
-//
-//     const radios = [
-//         { name: 'PLAYER', value: '1' },
-//         { name: 'COMPUTER', value: '2' },
-//     ];
-//
-//     const changeFirstMover = e => {
-//         setRadioValue(e.currentTarget.value)
-//
-//         if (e.currentTarget.value === '1') {
-//             chooseFirstMover('PLAYER')
-//         }
-//         else {
-//             chooseFirstMover('COMPUTER')
-//         }
-//     }
-//
-//     return (
-//         <>
-//             <fieldset>
-//                 <legend>First mover</legend>
-//                 <ButtonGroup toggle>
-//                     {radios.map((radio, idx) => (
-//                         <ToggleButton
-//                             key={idx}
-//                             className={'playerToggleButton'}
-//                             type="radio"
-//                             variant="secondary"
-//                             name="radio"
-//                             value={radio.value}
-//                             checked={radioValue === radio.value}
-//                             onChange={changeFirstMover}
-//                         >
-//                             {radio.name}
-//                         </ToggleButton>
-//                     ))}
-//                 </ButtonGroup>
-//             </fieldset>
-//         </>
-//     );
-// }
 
-// export default function GameBoard({firstMover}) {
-export default function GameBoard({nextMover}) {
+export default function GameBoard({nextMover, setPlayAgain}) {
     const [mover, setMover] = useState(nextMover);
 
     const [coinCounts, setCoinCounts] = useState([...Array(5).keys()].map(_ => getRandomInt(1, 10)));
@@ -85,8 +42,6 @@ export default function GameBoard({nextMover}) {
 
     const makePlayerMove = (heapNum, count) => {
         console.log(`\nMAKE-PLAYER-MOVE(): (heapNum, count) = (${heapNum}, ${count})`)
-
-        // const beforeCounts = coinCountStr(coinCounts)
 
         let newCoinCounts = Array.from(coinCounts)
         newCoinCounts[heapNum] -= count
@@ -153,6 +108,15 @@ export default function GameBoard({nextMover}) {
         setMover('PLAYER')
     }
 
+    const playAgain = () => {
+        setCoinCounts([...Array(5).keys()].map(_ => getRandomInt(1, 10)))
+        setMovesLog([])
+        setMoveNum(0)
+
+        setMover(nextMover)
+        // setPlayAgain()
+    }
+
     let heapMap = new Map()
 
     let coinsLeft = false
@@ -168,20 +132,12 @@ export default function GameBoard({nextMover}) {
         const winner = (mover === 'COMPUTER') ? 'PLAYER' : 'COMPUTER'
         return (
             <div className={'gameBoardContainer'}>
-                <MovesRecord/>
-
                 <TickerTape  movesLog={movesLog}/>
 
                 <h2>{'------ GAME OVER -------'}</h2>
                 <h2>{`------ WINNER IS: ${winner } -------`}</h2>
 
-                <div className={'gameBoard'}>
-                    {
-                        Array.from(heapMap.keys()).map(key =>
-                            <CoinHeap name={`${key}`} coinCount={heapMap.get(key)} updateCoinCounts={makePlayerMove}/>
-                        )
-                    }
-                </div>
+                <Button variant="primary" id={'playAgain'} size="lg" onClick={playAgain}>Play again</Button>
             </div>
         )
     }
@@ -192,9 +148,6 @@ export default function GameBoard({nextMover}) {
 
     return (
         <div className={'gameBoardContainer'}>
-
-            <MovesRecord/>
-
             <TickerTape  movesLog={movesLog}/>
 
             <div className={'gameBoard'}>
