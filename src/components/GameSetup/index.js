@@ -100,15 +100,15 @@ const FirstMover = ({chooseFirstMover}) => {
 }
 
 const HeapCount = ({chooseHeapCount}) => {
-    const [radioValue, setRadioValue] = useState('5');
+    const [heapCountValue, setheapCountValue] = useState('5');
 
-    const radios = [
+    const heapCountRadios = [
         { name: '5', value: '5' },
         { name: '7', value: '7' },
     ];
 
     const changeHeapCount = e => {
-        setRadioValue(e.currentTarget.value)
+        setheapCountValue(e.currentTarget.value)
 
         if (e.currentTarget.value === '5') {
             chooseHeapCount(5)
@@ -123,18 +123,20 @@ const HeapCount = ({chooseHeapCount}) => {
             <fieldset>
                 <legend>Heap count</legend>
                 <ButtonGroup toggle>
-                    {radios.map((radio, idx) => (
+                    {heapCountRadios.map((heapCount, idx) => (
                         <ToggleButton
                             key={idx}
                             className={'heapCountToggleButton'}
                             type="radio"
                             variant="secondary"
-                            name="radio"
-                            value={radio.value}
-                            checked={radioValue === radio.value}
+
+                            name="heapCount"
+                            value={heapCount.value}
+                            // value={radio.value}
+                            checked={heapCountValue === heapCount.value}
                             onChange={changeHeapCount}
                         >
-                            {radio.name}
+                            {heapCount.name}
                         </ToggleButton>
                     ))}
                 </ButtonGroup>
