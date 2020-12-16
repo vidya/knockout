@@ -4,12 +4,17 @@
 
 import React, { useState } from 'react'
 
+import {zip} from 'underscore'
+
 import CoinHeap from "../CoinHeap";
 import {Button} from "react-bootstrap";
 
 import './style.scss'
 import MovesRecord from "../MovesRecord";
 import TickerTape from "../TickerTape";
+import underscore from "underscore/underscore";
+
+import HeapMap from "./heapMap";
 
 function getRandomInt(min, max) {
     min = Math.ceil(min);
@@ -27,6 +32,9 @@ export default function GameBoard({nextMover, setPlayAgain}) {
     const [moveNum, setMoveNum] = useState(0);
 
     console.log(`GAME_BOARD: START --> GameBoard: start: mover = ${mover}`)
+
+    // const t1 = zip(['moe', 'larry', 'curly'], [30, 40, 50], [true, false, false]);
+    // console.log(`t1 = ${t1}`)
 
     let moveInfo = {}
     const heapNames = ['A', 'B', 'C', 'D', 'E']
@@ -117,16 +125,23 @@ export default function GameBoard({nextMover, setPlayAgain}) {
         // setPlayAgain()
     }
 
-    let heapMap = new Map()
+    //------------
+    // const h1 = zip(heapNames, coinCounts)
+    const hm = new HeapMap({heapNames: heapNames, coinCounts: coinCounts})
+    const heapMap = hm.heapMap
+    //------------
 
-    let coinsLeft = false
-
-    for (const [index, name] of heapNames.entries()) {
-        if (coinCounts[index] > 0) {
-            heapMap.set(name, coinCounts[index])
-            coinsLeft = true
-        }
-    }
+    // let heapMap = new Map()
+    //
+    // let coinsLeft = false
+    //
+    // for (const [index, name] of heapNames.entries()) {
+    //     if (coinCounts[index] > 0) {
+    //         heapMap.set(name, coinCounts[index])
+    //         coinsLeft = true
+    //     }
+    // }
+    const coinsLeft = hm.coinsLeft()
 
     if (!coinsLeft) {
         const winner = (mover === 'COMPUTER') ? 'PLAYER' : 'COMPUTER'
@@ -148,7 +163,7 @@ export default function GameBoard({nextMover, setPlayAgain}) {
 
     return (
         <div className={'gameBoardContainer'}>
-            <TickerTape  movesLog={movesLog}/>
+            {moveNum > 0 && <TickerTape  movesLog={movesLog}/>}
 
             <div className={'gameBoard'}>
                 {
