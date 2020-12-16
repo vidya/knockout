@@ -88,6 +88,11 @@ const Styles = styled.div`
     border-spacing: 0;
     border: 1px solid black;
 
+    tbody tr:nth-child(odd) {
+       // background-color: #ccc;
+       background-color: #e6ffe6;
+    }
+
     tr {
       :last-child {
         td {
