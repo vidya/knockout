@@ -76,7 +76,7 @@ export default function GameBoard({nextMover, setPlayAgain}) {
         setMover('COMPUTER')
     }
 
-    const makeComputerMove = () => {
+    const getRandomMove = () => {
         let heapNum = -1
         let count = -1
 
@@ -88,6 +88,24 @@ export default function GameBoard({nextMover, setPlayAgain}) {
             count = getRandomInt(1, coinCounts[heapNum] + 1)
             break
         }
+
+        return {heapNum: heapNum, count: count}
+    }
+
+    const makeComputerMove = () => {
+        // let heapNum = -1
+        // let count = -1
+        //
+        // while (true) {
+        //     heapNum = getRandomInt(0, 5)
+        //     if (coinCounts[heapNum] <= 0) {
+        //         continue
+        //     }
+        //     count = getRandomInt(1, coinCounts[heapNum] + 1)
+        //     break
+        // }
+
+        const {heapNum, count} = getRandomMove()
 
         console.log(`\nMAKE-COMPUTER-MOVE(): (heapNum, count) = (${heapNum}, ${count})`)
 
@@ -122,25 +140,11 @@ export default function GameBoard({nextMover, setPlayAgain}) {
         setMoveNum(0)
 
         setMover(nextMover)
-        // setPlayAgain()
     }
 
-    //------------
-    // const h1 = zip(heapNames, coinCounts)
     const hm = new HeapMap({heapNames: heapNames, coinCounts: coinCounts})
     const heapMap = hm.heapMap
-    //------------
 
-    // let heapMap = new Map()
-    //
-    // let coinsLeft = false
-    //
-    // for (const [index, name] of heapNames.entries()) {
-    //     if (coinCounts[index] > 0) {
-    //         heapMap.set(name, coinCounts[index])
-    //         coinsLeft = true
-    //     }
-    // }
     const coinsLeft = hm.coinsLeft()
 
     if (!coinsLeft) {
