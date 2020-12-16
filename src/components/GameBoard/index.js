@@ -31,6 +31,7 @@ export default function GameBoard({nextMover, setPlayAgain}) {
     const [movesLog, setMovesLog] = useState([]);
     const [moveNum, setMoveNum] = useState(0);
 
+    // console.log(`\n\n=== START OF GAME =======================`)
     console.log(`GAME_BOARD: START --> GameBoard: start: mover = ${mover}`)
 
     // const t1 = zip(['moe', 'larry', 'curly'], [30, 40, 50], [true, false, false]);
@@ -49,13 +50,15 @@ export default function GameBoard({nextMover, setPlayAgain}) {
     const moveStr = (heapNum, count) => `${heapNames[heapNum]}${count}`
 
     const makePlayerMove = (heapNum, count) => {
-        console.log(`\nMAKE-PLAYER-MOVE(): (heapNum, count) = (${heapNum}, ${count})`)
+        // console.log(`\nMAKE-PLAYER-MOVE(): (heapNum, count) = (${heapNum}, ${count})`)
 
         let newCoinCounts = Array.from(coinCounts)
         newCoinCounts[heapNum] -= count
 
         const newMoveNum  = moveNum  + 1
         setMoveNum(newMoveNum)
+
+        console.log(`\nMAKE-PLAYER-MOVE(): (moveNum, heapNum, count) = (${newMoveNum}, ${heapNum}, ${count})`)
 
         let newMovesLog = Array.from(movesLog)
         moveInfo = {
@@ -100,6 +103,9 @@ export default function GameBoard({nextMover, setPlayAgain}) {
 
         const hm = new HeapMap({heapNames, coinCounts})
         if (hm.heapCount === 1) {
+            console.log(`\n--- CASE #1: ALL COINS FROM THE ONLY NONEMPTY HEAP`)
+
+            // take all coins from the only non-empty heap
             coinCounts.forEach((value, index) => {
                 if (value > 0) {
                     heapNum = index
@@ -107,20 +113,56 @@ export default function GameBoard({nextMover, setPlayAgain}) {
                 }
             })
         }
+        else if ((hm.heapCount === 2) && (hm.singletonCount === 1)) {
+            console.log(`\n--- CASE #2: ALL BUT ONE COINS FROM NON-SINGLETON HEAP`)
+
+            // take all but one coins from the non-singleton heap
+            coinCounts.forEach((value, index) => {
+                if (value > 1) {
+                    heapNum = index
+                    count = value - 1
+                }
+            })
+        }
+        else if ((hm.heapCount === 3) && (hm.singletonCount === 2)) {
+            console.log(`\n--- CASE #3: TAKE ALL COINS FROM THE ONLY NON-SINGLETON HEAP`)
+
+            // take all coins from the only non-singleton heap
+            coinCounts.forEach((value, index) => {
+                if (value > 1) {
+                    heapNum = index
+                    count = value
+                }
+            })
+        }
+        // else if ((hm.heapCount === 2) && (hm.singletonCount === 0)
+        //         && (hm.doubletonCount === 1)) {
+        //     console.log(`\n--- CASE #4: TAKE ALL BUT ONE COINS FROM THE ONLY NON-DOUBLETON HEAP`)
+        //
+        //     // take all but one coins from the only non-doubleton heap
+        //     coinCounts.forEach((value, index) => {
+        //         if (value > 2) {
+        //             heapNum = index
+        //             count = value - 1
+        //         }
+        //     })
+        // }
         else {
+            console.log(`\n--- CASE #0: RANDOM MOVE`)
             const  {heapNum:heapNum1, count:count1} = getRandomMove()
             heapNum = heapNum1
             count = count1
         }
         //------------------
 
-        console.log(`\nMAKE-COMPUTER-MOVE(): (heapNum, count) = (${heapNum}, ${count})`)
 
         let newCoinCounts = Array.from(coinCounts)
         newCoinCounts[heapNum] -= count
 
         const newMoveNum  = moveNum  + 1
         setMoveNum(newMoveNum)
+
+        console.log(`\nMAKE-COMPUTER-MOVE(): (moveNum, heapNum, count) = (${newMoveNum}, ${heapNum}, ${count})`)
 
         let newMovesLog = Array.from(movesLog)
         moveInfo = {
@@ -156,6 +198,8 @@ export default function GameBoard({nextMover, setPlayAgain}) {
 
     if (!coinsLeft) {
         const winner = (mover === 'COMPUTER') ? 'PLAYER' : 'COMPUTER'
+        // console.log(`=== END OF GAME ==========================\n\n`)
+
         return (
             <div className={'gameBoardContainer'}>
                 <TickerTape  movesLog={movesLog}/>

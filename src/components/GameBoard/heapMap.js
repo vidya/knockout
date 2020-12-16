@@ -10,7 +10,7 @@
      (Heap-count == 1) — take all coins from the heap
      (Heap-count == 2) And (singleton-count == 1) — take all but one of the coins in the non-singleton heap
      (Heap-count == 3) And (singleton-count == 2) — take all coins from the non-singleton heap.
-     (Heap-count == 2) And (singleton-count == 0) and (doubleton-count == 1)— take all but one of the coins in the non-doubleton heap
+     --- ??? -- (Heap-count == 2) And (singleton-count == 0) and (doubleton-count == 1)— take all but one of the coins in the non-doubleton heap
 
  Losing positions
     (Heap-count == 2) And (singleton-count == 2) — what you choose won’t make a difference. Make a random choice.
@@ -38,10 +38,6 @@ export default class HeapMap {
         this.heapCount = this.heapMap.size
         this.singletonCount = 0
 
-        // function logMapElements(value, key, map) {
-        //     console.log(`map.get('${key}') = ${value}`)
-        // }
-        // new Map([['foo', 3], ['bar', {}], ['baz', undefined]]).forEach(logMapElements)
         this.heapMap.forEach((value, key, map) => {
             if (value === 1) {
                 this.singletonCount += 1
