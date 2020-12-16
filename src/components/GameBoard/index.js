@@ -93,19 +93,26 @@ export default function GameBoard({nextMover, setPlayAgain}) {
     }
 
     const makeComputerMove = () => {
-        // let heapNum = -1
-        // let count = -1
-        //
-        // while (true) {
-        //     heapNum = getRandomInt(0, 5)
-        //     if (coinCounts[heapNum] <= 0) {
-        //         continue
-        //     }
-        //     count = getRandomInt(1, coinCounts[heapNum] + 1)
-        //     break
-        // }
+        // const {heapNum, count} = getRandomMove()
+        //------------------
+        let heapNum = -1
+        let count = -1
 
-        const {heapNum, count} = getRandomMove()
+        const hm = new HeapMap({heapNames, coinCounts})
+        if (hm.heapCount === 1) {
+            coinCounts.forEach((value, index) => {
+                if (value > 0) {
+                    heapNum = index
+                    count = value
+                }
+            })
+        }
+        else {
+            const  {heapNum:heapNum1, count:count1} = getRandomMove()
+            heapNum = heapNum1
+            count = count1
+        }
+        //------------------
 
         console.log(`\nMAKE-COMPUTER-MOVE(): (heapNum, count) = (${heapNum}, ${count})`)
 
