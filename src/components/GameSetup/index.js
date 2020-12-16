@@ -100,7 +100,7 @@ const FirstMover = ({chooseFirstMover}) => {
 }
 
 const HeapCount = ({chooseHeapCount}) => {
-    const [heapCountValue, setheapCountValue] = useState('5');
+    const [heapCountValue, setHeapCountValue] = useState('7');
 
     const heapCountRadios = [
         { name: '5', value: '5' },
@@ -108,7 +108,7 @@ const HeapCount = ({chooseHeapCount}) => {
     ];
 
     const changeHeapCount = e => {
-        setheapCountValue(e.currentTarget.value)
+        setHeapCountValue(e.currentTarget.value)
 
         if (e.currentTarget.value === '5') {
             chooseHeapCount(5)

@@ -36,14 +36,14 @@ export default function GameBoard({nextMover, heapCount: heapCountStr, setPlayAg
     const [moveNum, setMoveNum] = useState(0);
 
     console.log(`GAME_BOARD: START --> GameBoard: start: (heapCount, mover) = (${heapCount}, ${mover})`)
-    console.log(`--> GameBoard: start: (coinCounts) = (${coinCounts})`)
+    console.log(`--> GameBoard: start: (coinCounts) = ([${coinCounts})]`)
 
     let moveInfo = {}
-    const heapNames = (heapCount === 5) ? ['A', 'B', 'C', 'D', 'E'] : ['A', 'B', 'C', 'D', 'E', 'G', 'H']
+    const heapNames = (heapCount === 5) ? ['A', 'B', 'C', 'D', 'E'] : ['A', 'B', 'C', 'D', 'E', 'F', 'G']
 
     const coinCountStr = (coinCounts) => {
         const str = coinCounts.map((v, index) => `${heapNames[index]}${v}`).join("-")
-        console.log(`coinCountStr(): (coinCounts, str) = (${coinCounts}, ${str})`)
+        console.log(`coinCountStr(): (coinCounts, str) = ([${coinCounts}], ${str})`)
 
         return str
     }
@@ -51,6 +51,7 @@ export default function GameBoard({nextMover, heapCount: heapCountStr, setPlayAg
     const moveStr = (heapNum, count) => `${heapNames[heapNum]}${count}`
 
     const makePlayerMove = (heapNum, count) => {
+
         let newCoinCounts = Array.from(coinCounts)
         newCoinCounts[heapNum] -= count
 
@@ -219,9 +220,12 @@ export default function GameBoard({nextMover, heapCount: heapCountStr, setPlayAg
 
             <div className={'gameBoard'}>
                 {
-                    Array.from(heapMap.keys()).map(key =>
-                        <CoinHeap name={`${key}`} coinCount={heapMap.get(key)} updateCoinCounts={makePlayerMove}/>
+                    Array.from(heapNames).map((value, index) =>
+                        <CoinHeap name={`${value}`} coinCount={coinCounts[index]} updateCoinCounts={makePlayerMove}/>
                     )
+                    // Array.from(heapMap.keys()).map(key =>
+                    //     <CoinHeap name={`${key}`} coinCount={heapMap.get(key)} updateCoinCounts={makePlayerMove}/>
+                    // )
                 }
             </div>
         </div>
