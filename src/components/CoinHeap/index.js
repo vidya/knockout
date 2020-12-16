@@ -59,8 +59,6 @@ const KeyPad = ({name, coinCount, updateCoinCounts}) => {
 }
 
 export default function CoinHeap({name, coinCount, updateCoinCounts}) {
-    console.log("CoinHeap: start")
-
     return (
         <div className={'heapContainer'}>
             <div className={'keyPad'}>

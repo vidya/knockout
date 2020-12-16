@@ -23,22 +23,23 @@ function getRandomInt(min, max) {
 }
 
 
-export default function GameBoard({nextMover, setPlayAgain}) {
+export default function GameBoard({nextMover, heapCount: heapCountStr, setPlayAgain}) {
     const [mover, setMover] = useState(nextMover);
 
-    const [coinCounts, setCoinCounts] = useState([...Array(5).keys()].map(_ => getRandomInt(1, 10)));
+    // const [coinCounts, setCoinCounts] = useState([...Array(5).keys()].map(_ => getRandomInt(1, 10)));
+    const heapCount = parseInt(heapCountStr)
+    const [coinCounts, setCoinCounts] = useState([...Array(heapCount).keys()].map(_ => getRandomInt(1, 10)));
+    // const [coinCounts, setCoinCounts] = useState([])
+    // setCoinCounts([...Array(heapCount).keys()].map(_ => getRandomInt(1, 10)))
 
     const [movesLog, setMovesLog] = useState([]);
     const [moveNum, setMoveNum] = useState(0);
 
-    // console.log(`\n\n=== START OF GAME =======================`)
-    console.log(`GAME_BOARD: START --> GameBoard: start: mover = ${mover}`)
-
-    // const t1 = zip(['moe', 'larry', 'curly'], [30, 40, 50], [true, false, false]);
-    // console.log(`t1 = ${t1}`)
+    console.log(`GAME_BOARD: START --> GameBoard: start: (heapCount, mover) = (${heapCount}, ${mover})`)
+    console.log(`--> GameBoard: start: (coinCounts) = (${coinCounts})`)
 
     let moveInfo = {}
-    const heapNames = ['A', 'B', 'C', 'D', 'E']
+    const heapNames = (heapCount === 5) ? ['A', 'B', 'C', 'D', 'E'] : ['A', 'B', 'C', 'D', 'E', 'G', 'H']
 
     const coinCountStr = (coinCounts) => {
         const str = coinCounts.map((v, index) => `${heapNames[index]}${v}`).join("-")
@@ -50,8 +51,6 @@ export default function GameBoard({nextMover, setPlayAgain}) {
     const moveStr = (heapNum, count) => `${heapNames[heapNum]}${count}`
 
     const makePlayerMove = (heapNum, count) => {
-        // console.log(`\nMAKE-PLAYER-MOVE(): (heapNum, count) = (${heapNum}, ${count})`)
-
         let newCoinCounts = Array.from(coinCounts)
         newCoinCounts[heapNum] -= count
 
@@ -70,7 +69,8 @@ export default function GameBoard({nextMover, setPlayAgain}) {
             'After': coinCountStr(newCoinCounts),
         }
 
-        setCoinCounts([...Array(5).keys()].map(n => newCoinCounts[n]))
+        // setCoinCounts([...Array(5).keys()].map(n => newCoinCounts[n]))
+        setCoinCounts([...Array(heapCount).keys()].map(n => newCoinCounts[n]))
         console.log(`makePlayerMove: (newCoinCounts, coinCounts) = (${newCoinCounts}, ${coinCounts})`)
 
         newMovesLog.push(moveInfo)
@@ -84,7 +84,8 @@ export default function GameBoard({nextMover, setPlayAgain}) {
         let count = -1
 
         while (true) {
-            heapNum = getRandomInt(0, 5)
+            // heapNum = getRandomInt(0, 5)
+            heapNum = getRandomInt(0, heapCount)
             if (coinCounts[heapNum] <= 0) {
                 continue
             }
@@ -96,8 +97,6 @@ export default function GameBoard({nextMover, setPlayAgain}) {
     }
 
     const makeComputerMove = () => {
-        // const {heapNum, count} = getRandomMove()
-        //------------------
         let heapNum = -1
         let count = -1
 
@@ -153,7 +152,6 @@ export default function GameBoard({nextMover, setPlayAgain}) {
             heapNum = heapNum1
             count = count1
         }
-        //------------------
 
 
         let newCoinCounts = Array.from(coinCounts)
@@ -174,7 +172,7 @@ export default function GameBoard({nextMover, setPlayAgain}) {
             'After': coinCountStr(newCoinCounts),
         }
 
-        setCoinCounts([...Array(5).keys()].map(n => newCoinCounts[n]))
+        setCoinCounts([...Array(heapCount).keys()].map(n => newCoinCounts[n]))
         console.log(`makeComputerMove: (newCoinCounts, coinCounts) = (${newCoinCounts}, ${coinCounts})`)
 
         newMovesLog.push(moveInfo)
@@ -184,7 +182,7 @@ export default function GameBoard({nextMover, setPlayAgain}) {
     }
 
     const playAgain = () => {
-        setCoinCounts([...Array(5).keys()].map(_ => getRandomInt(1, 10)))
+        setCoinCounts([...Array(heapCount).keys()].map(_ => getRandomInt(1, 10)))
         setMovesLog([])
         setMoveNum(0)
 
@@ -198,7 +196,6 @@ export default function GameBoard({nextMover, setPlayAgain}) {
 
     if (!coinsLeft) {
         const winner = (mover === 'COMPUTER') ? 'PLAYER' : 'COMPUTER'
-        // console.log(`=== END OF GAME ==========================\n\n`)
 
         return (
             <div className={'gameBoardContainer'}>
