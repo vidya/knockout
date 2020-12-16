@@ -132,7 +132,7 @@ const HeapCount = ({chooseHeapCount}) => {
 
                             name="heapCount"
                             value={heapCount.value}
-                            // value={radio.value}
+
                             checked={heapCountValue === heapCount.value}
                             onChange={changeHeapCount}
                         >

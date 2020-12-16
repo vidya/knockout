@@ -4,15 +4,11 @@
 
 import React, { useState } from 'react'
 
-import {zip} from 'underscore'
-
 import CoinHeap from "../CoinHeap";
 import {Button} from "react-bootstrap";
 
 import './style.scss'
-import MovesRecord from "../MovesRecord";
 import TickerTape from "../TickerTape";
-import underscore from "underscore/underscore";
 
 import HeapMap from "./heapMap";
 
@@ -26,11 +22,8 @@ function getRandomInt(min, max) {
 export default function GameBoard({nextMover, heapCount: heapCountStr, setPlayAgain}) {
     const [mover, setMover] = useState(nextMover);
 
-    // const [coinCounts, setCoinCounts] = useState([...Array(5).keys()].map(_ => getRandomInt(1, 10)));
     const heapCount = parseInt(heapCountStr)
     const [coinCounts, setCoinCounts] = useState([...Array(heapCount).keys()].map(_ => getRandomInt(1, 10)));
-    // const [coinCounts, setCoinCounts] = useState([])
-    // setCoinCounts([...Array(heapCount).keys()].map(_ => getRandomInt(1, 10)))
 
     const [movesLog, setMovesLog] = useState([]);
     const [moveNum, setMoveNum] = useState(0);
@@ -70,7 +63,6 @@ export default function GameBoard({nextMover, heapCount: heapCountStr, setPlayAg
             'After': coinCountStr(newCoinCounts),
         }
 
-        // setCoinCounts([...Array(5).keys()].map(n => newCoinCounts[n]))
         setCoinCounts([...Array(heapCount).keys()].map(n => newCoinCounts[n]))
         console.log(`makePlayerMove: (newCoinCounts, coinCounts) = (${newCoinCounts}, ${coinCounts})`)
 
@@ -85,7 +77,6 @@ export default function GameBoard({nextMover, heapCount: heapCountStr, setPlayAg
         let count = -1
 
         while (true) {
-            // heapNum = getRandomInt(0, 5)
             heapNum = getRandomInt(0, heapCount)
             if (coinCounts[heapNum] <= 0) {
                 continue
@@ -223,9 +214,6 @@ export default function GameBoard({nextMover, heapCount: heapCountStr, setPlayAg
                     Array.from(heapNames).map((value, index) =>
                         <CoinHeap name={`${value}`} coinCount={coinCounts[index]} updateCoinCounts={makePlayerMove}/>
                     )
-                    // Array.from(heapMap.keys()).map(key =>
-                    //     <CoinHeap name={`${key}`} coinCount={heapMap.get(key)} updateCoinCounts={makePlayerMove}/>
-                    // )
                 }
             </div>
         </div>

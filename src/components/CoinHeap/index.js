@@ -25,10 +25,10 @@ const CoinRow = ({name, coinCount}) => {
 }
 
 const KeyPad = ({name, coinCount, updateCoinCounts}) => {
-    const choiceNums = [...Array(coinCount).keys()].map(n => n + 1)
+    const countChoices = [...Array(coinCount).keys()].map(n => n + 1)
 
-    const choiceNumClick = e => {
-        console.log(`choiceNumClick(): e: ${e}`)
+    const countChoiceClick = e => {
+        console.log(`countChoiceClick(): e: ${e}`)
         const cNum = parseInt(e.target.dataset.choice)
 
         const letMap = {
@@ -49,8 +49,8 @@ const KeyPad = ({name, coinCount, updateCoinCounts}) => {
         <>
             <ul className={'choiceNumList'}>
             {
-                choiceNums.map((cnum, index) =>
-                        <li key={cnum} className={'choiceNumItem'} onClick={choiceNumClick}  data-choice={cnum}>
+                countChoices.map((cnum, index) =>
+                        <li key={cnum} className={'choiceNumItem'} onClick={countChoiceClick}  data-choice={cnum}>
                             {cnum}
                         </li>
                 )
