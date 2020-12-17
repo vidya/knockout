@@ -10,7 +10,7 @@ import {Button} from "react-bootstrap";
 import './style.scss'
 import TickerTape from "../TickerTape";
 
-import HeapMap from "./heapMap";
+import CoinHeaps from "./coinHeaps";
 
 function getRandomInt(min, max) {
     min = Math.ceil(min);
@@ -32,7 +32,7 @@ export default function GameBoard({nextMover, heapCount: heapCountStr, setPlayAg
     console.log(`--> GameBoard: start: (coinCounts) = ([${coinCounts})]`)
 
     let moveInfo = {}
-    const hm = new HeapMap({heapCount: heapCount, coinCounts: coinCounts})
+    const hm = new CoinHeaps({heapCount: heapCount, coinCounts: coinCounts})
 
     // const heapNames = hm.heapNames
 
@@ -86,8 +86,8 @@ export default function GameBoard({nextMover, heapCount: heapCountStr, setPlayAg
         let heapNum = -1
         let count = -1
 
-        // const hm = new HeapMap({heapNames, coinCounts})
-        const hm = new HeapMap({heapCount, coinCounts})
+        // const hm = new CoinHeaps({heapNames, coinCounts})
+        const hm = new CoinHeaps({heapCount, coinCounts})
         if (hm.heapCount === 1) {
             console.log(`\n--- CASE #1: ALL COINS FROM THE ONLY NONEMPTY HEAP`)
 

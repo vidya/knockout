@@ -22,7 +22,7 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
 }
 
-export default class HeapMap {
+export default class CoinHeaps {
     constructor({heapCount, coinCounts}) {
         this.heapNames = "ABCDEFGHI".split('').slice(0, heapCount);
         this.coinCounts = coinCounts;
