@@ -23,8 +23,8 @@ function getRandomInt(min, max) {
 }
 
 export default class HeapMap {
-    constructor({heapNames, coinCounts}) {
-        this.heapNames = heapNames;
+    constructor({heapCount, coinCounts}) {
+        this.heapNames = "ABCDEFGHI".split('').slice(0, heapCount);
         this.coinCounts = coinCounts;
 
         this.heapMap = new Map()
@@ -51,6 +51,13 @@ export default class HeapMap {
                 this.doubletonCount += 1
             }
         })
+    }
+
+    coinCountStr(coinCounts) {
+        const str = coinCounts.map((v, index) => `${this.heapNames[index]}${v}`).join("-")
+        console.log(`coinCountStr(): (coinCounts, str) = ([${coinCounts}], ${str})`)
+
+        return str
     }
 
     coinsLeft() {

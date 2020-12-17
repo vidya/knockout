@@ -32,19 +32,13 @@ export default function GameBoard({nextMover, heapCount: heapCountStr, setPlayAg
     console.log(`--> GameBoard: start: (coinCounts) = ([${coinCounts})]`)
 
     let moveInfo = {}
-    const heapNames = (heapCount === 5) ? ['A', 'B', 'C', 'D', 'E'] : ['A', 'B', 'C', 'D', 'E', 'F', 'G']
+    const hm = new HeapMap({heapCount: heapCount, coinCounts: coinCounts})
 
-    const coinCountStr = (coinCounts) => {
-        const str = coinCounts.map((v, index) => `${heapNames[index]}${v}`).join("-")
-        console.log(`coinCountStr(): (coinCounts, str) = ([${coinCounts}], ${str})`)
+    // const heapNames = hm.heapNames
 
-        return str
-    }
-
-    const moveStr = (heapNum, count) => `${heapNames[heapNum]}${count}`
+    const moveStr = (heapNum, count) => `${hm.heapNames[heapNum]}${count}`
 
     const makePlayerMove = (heapNum, count) => {
-
         let newCoinCounts = Array.from(coinCounts)
         newCoinCounts[heapNum] -= count
 
@@ -58,9 +52,9 @@ export default function GameBoard({nextMover, heapCount: heapCountStr, setPlayAg
             'Move #': newMoveNum,
             'Made by': mover,
 
-            'Before': coinCountStr(coinCounts),
+            'Before': hm.coinCountStr(coinCounts),
             'Move': moveStr(heapNum, count),
-            'After': coinCountStr(newCoinCounts),
+            'After': hm.coinCountStr(newCoinCounts),
         }
 
         setCoinCounts([...Array(heapCount).keys()].map(n => newCoinCounts[n]))
@@ -92,7 +86,8 @@ export default function GameBoard({nextMover, heapCount: heapCountStr, setPlayAg
         let heapNum = -1
         let count = -1
 
-        const hm = new HeapMap({heapNames, coinCounts})
+        // const hm = new HeapMap({heapNames, coinCounts})
+        const hm = new HeapMap({heapCount, coinCounts})
         if (hm.heapCount === 1) {
             console.log(`\n--- CASE #1: ALL COINS FROM THE ONLY NONEMPTY HEAP`)
 
@@ -159,9 +154,9 @@ export default function GameBoard({nextMover, heapCount: heapCountStr, setPlayAg
             'Move #': newMoveNum,
             'Made by': mover,
 
-            'Before': coinCountStr(coinCounts),
+            'Before': hm.coinCountStr(coinCounts),
             'Move': moveStr(heapNum, count),
-            'After': coinCountStr(newCoinCounts),
+            'After': hm.coinCountStr(newCoinCounts),
         }
 
         setCoinCounts([...Array(heapCount).keys()].map(n => newCoinCounts[n]))
@@ -180,9 +175,6 @@ export default function GameBoard({nextMover, heapCount: heapCountStr, setPlayAg
 
         setMover(nextMover)
     }
-
-    const hm = new HeapMap({heapNames: heapNames, coinCounts: coinCounts})
-    const heapMap = hm.heapMap
 
     const coinsLeft = hm.coinsLeft()
 
@@ -211,7 +203,7 @@ export default function GameBoard({nextMover, heapCount: heapCountStr, setPlayAg
 
             <div className={'gameBoard'}>
                 {
-                    Array.from(heapNames).map((value, index) =>
+                    Array.from(hm.heapNames).map((value, index) =>
                         <CoinHeap name={`${value}`} coinCount={coinCounts[index]} updateCoinCounts={makePlayerMove}/>
                     )
                 }
