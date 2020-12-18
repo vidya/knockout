@@ -31,17 +31,6 @@ const KeyPad = ({name, index, coinCount, makePlayerMove}) => {
         console.log(`countChoiceClick(): e: ${e}`)
         const cNum = parseInt(e.target.dataset.choice)
 
-        // const letMap = {
-        //     'A': 0,
-        //     'B': 1,
-        //     'C': 2,
-        //     'D': 3,
-        //     'E': 4,
-        //     'F': 5,
-        //     'G': 6
-        // }
-
-        // updateCoinCounts(letMap[name], cNum)
         makePlayerMove(index, cNum)
         console.log(`chosen: heap-count = ${name}-${cNum}`)
     }
@@ -51,7 +40,8 @@ const KeyPad = ({name, index, coinCount, makePlayerMove}) => {
             <ul className={'choiceNumList'}>
             {
                 countChoices.map((cnum, index) =>
-                        <li key={cnum} className={'choiceNumItem'} onClick={countChoiceClick}  data-choice={cnum}>
+                        <li key={cnum} className={'choiceNumItem'}
+                            onClick={countChoiceClick}  data-choice={cnum}>
                             {cnum}
                         </li>
                 )

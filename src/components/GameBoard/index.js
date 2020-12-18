@@ -34,8 +34,6 @@ export default function GameBoard({nextMover, heapCount: heapCountStr, setPlayAg
     let moveInfo = {}
     const hm = new CoinHeaps({heapCount: heapCount, coinCounts: coinCounts})
 
-    // const heapNames = hm.heapNames
-
     const moveStr = (heapNum, count) => `${hm.heapNames[heapNum]}${count}`
 
     const makePlayerMove = (heapNum, count) => {
@@ -139,7 +137,6 @@ export default function GameBoard({nextMover, heapCount: heapCountStr, setPlayAg
             heapNum = heapNum1
             count = count1
         }
-
 
         let newCoinCounts = Array.from(coinCounts)
         newCoinCounts[heapNum] -= count
