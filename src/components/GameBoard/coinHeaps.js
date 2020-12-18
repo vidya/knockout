@@ -16,12 +16,6 @@
     (Heap-count == 2) And (singleton-count == 2) — what you choose won’t make a difference. Make a random choice.
  */
 
-function getRandomInt(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
-}
-
 export default class CoinHeaps {
     constructor({heapCount, coinCounts}) {
         this.heapNames = "ABCDEFGHI".split('').slice(0, heapCount);

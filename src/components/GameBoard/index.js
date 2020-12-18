@@ -36,14 +36,12 @@ export default function GameBoard({nextMover, heapCount: heapCountStr, setPlayAg
 
     const moveStr = (heapNum, count) => `${hm.heapNames[heapNum]}${count}`
 
-    const makePlayerMove = (heapNum, count) => {
+    const generateNextMove = (lastMoveNum, heapNum, count) => {
         let newCoinCounts = Array.from(coinCounts)
         newCoinCounts[heapNum] -= count
 
         const newMoveNum  = moveNum  + 1
-        setMoveNum(newMoveNum)
-
-        console.log(`\nMAKE-PLAYER-MOVE(): (moveNum, heapNum, count) = (${newMoveNum}, ${heapNum}, ${count})`)
+        // setMoveNum(newMoveNum)
 
         let newMovesLog = Array.from(movesLog)
         moveInfo = {
@@ -54,11 +52,46 @@ export default function GameBoard({nextMover, heapCount: heapCountStr, setPlayAg
             'Move': moveStr(heapNum, count),
             'After': hm.coinCountStr(newCoinCounts),
         }
+        newMovesLog.push(moveInfo)
+
+        return {
+            newMoveNum,
+            newCoinCounts,
+            newMovesLog,
+        }
+        // return {
+        //     newMoveNum: newMoveNum,
+        //     newCoinCounts: newCoinCounts,
+        //     newMovesLog: newMovesLog,
+        // }
+    }
+
+    const makePlayerMove = (heapNum, count) => {
+        // let newCoinCounts = Array.from(coinCounts)
+        // newCoinCounts[heapNum] -= count
+        //
+        // const newMoveNum  = moveNum  + 1
+        const {newMoveNum,
+            newCoinCounts,
+            newMovesLog,} = generateNextMove(moveNum, heapNum, count)
+        setMoveNum(newMoveNum)
+
+        console.log(`\nMAKE-PLAYER-MOVE(): (moveNum, heapNum, count) = (${newMoveNum}, ${heapNum}, ${count})`)
+
+        // let newMovesLog = Array.from(movesLog)
+        // moveInfo = {
+        //     'Move #': newMoveNum,
+        //     'Made by': mover,
+        //
+        //     'Before': hm.coinCountStr(coinCounts),
+        //     'Move': moveStr(heapNum, count),
+        //     'After': hm.coinCountStr(newCoinCounts),
+        // }
 
         setCoinCounts([...Array(heapCount).keys()].map(n => newCoinCounts[n]))
         console.log(`makePlayerMove: (newCoinCounts, coinCounts) = (${newCoinCounts}, ${coinCounts})`)
 
-        newMovesLog.push(moveInfo)
+        // newMovesLog.push(moveInfo)
         setMovesLog(newMovesLog)
 
         setMover('COMPUTER')
@@ -138,28 +171,32 @@ export default function GameBoard({nextMover, heapCount: heapCountStr, setPlayAg
             count = count1
         }
 
-        let newCoinCounts = Array.from(coinCounts)
-        newCoinCounts[heapNum] -= count
+        // let newCoinCounts = Array.from(coinCounts)
+        // newCoinCounts[heapNum] -= count
 
-        const newMoveNum  = moveNum  + 1
+        const {newMoveNum,
+            newCoinCounts,
+            newMovesLog,} = generateNextMove(moveNum, heapNum, count)
+        // const newMoveNum  = moveNum  + 1
+
         setMoveNum(newMoveNum)
 
         console.log(`\nMAKE-COMPUTER-MOVE(): (moveNum, heapNum, count) = (${newMoveNum}, ${heapNum}, ${count})`)
 
-        let newMovesLog = Array.from(movesLog)
-        moveInfo = {
-            'Move #': newMoveNum,
-            'Made by': mover,
-
-            'Before': hm.coinCountStr(coinCounts),
-            'Move': moveStr(heapNum, count),
-            'After': hm.coinCountStr(newCoinCounts),
-        }
+        // let newMovesLog = Array.from(movesLog)
+        // moveInfo = {
+        //     'Move #': newMoveNum,
+        //     'Made by': mover,
+        //
+        //     'Before': hm.coinCountStr(coinCounts),
+        //     'Move': moveStr(heapNum, count),
+        //     'After': hm.coinCountStr(newCoinCounts),
+        // }
 
         setCoinCounts([...Array(heapCount).keys()].map(n => newCoinCounts[n]))
         console.log(`makeComputerMove: (newCoinCounts, coinCounts) = (${newCoinCounts}, ${coinCounts})`)
 
-        newMovesLog.push(moveInfo)
+        // newMovesLog.push(moveInfo)
         setMovesLog(newMovesLog)
 
         setMover('PLAYER')

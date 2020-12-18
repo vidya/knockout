@@ -13,7 +13,7 @@ const CoinRow = ({name, coinCount}) => {
         <>
             <ul className={'coinList'}>
             {
-                choiceNums.map((cnum, index) =>
+                choiceNums.map(cnum =>
                         <li key={cnum} className={'coinListItem'}>
                             {' '}
                         </li>
@@ -27,8 +27,8 @@ const CoinRow = ({name, coinCount}) => {
 const KeyPad = ({name, index, coinCount, makePlayerMove}) => {
     const countChoices = [...Array(coinCount).keys()].map(n => n + 1)
 
-    const countChoiceClick = e => {
-        console.log(`countChoiceClick(): e: ${e}`)
+    const countClick = e => {
+        console.log(`countClick(): e: ${e}`)
         const cNum = parseInt(e.target.dataset.choice)
 
         makePlayerMove(index, cNum)
@@ -39,9 +39,9 @@ const KeyPad = ({name, index, coinCount, makePlayerMove}) => {
         <>
             <ul className={'choiceNumList'}>
             {
-                countChoices.map((cnum, index) =>
+                countChoices.map(cnum =>
                         <li key={cnum} className={'choiceNumItem'}
-                            onClick={countChoiceClick}  data-choice={cnum}>
+                            onClick={countClick}  data-choice={cnum}>
                             {cnum}
                         </li>
                 )

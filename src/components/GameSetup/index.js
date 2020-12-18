@@ -196,6 +196,5 @@ export default function GameSetup() {
                 </div>
             </div>
         );
-
     }
 }
