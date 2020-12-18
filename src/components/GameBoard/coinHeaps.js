@@ -1,3 +1,5 @@
+import {useState} from "react";
+
 /***
  *
  NimZap - Notes
@@ -15,6 +17,12 @@
  Losing positions
     (Heap-count == 2) And (singleton-count == 2) — what you choose won’t make a difference. Make a random choice.
  */
+
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
+}
 
 export default class CoinHeaps {
     constructor({heapCount, coinCounts}) {
@@ -47,11 +55,24 @@ export default class CoinHeaps {
         })
     }
 
+    static createRandomCoinCounts(heapCount) {
+        return [...Array(heapCount).keys()].map(_ => getRandomInt(1, 10))
+    }
     coinCountStr(coinCounts) {
         const str = coinCounts.map((v, index) => `${this.heapNames[index]}${v}`).join("-")
         console.log(`coinCountStr(): (coinCounts, str) = ([${coinCounts}], ${str})`)
 
         return str
+    }
+
+    getRandomMove() {
+        while (true) {
+            const heapNum = getRandomInt(0, this.heapCount)
+            if (this.coinCounts[heapNum] > 0) {
+                const count = getRandomInt(1, this.coinCounts[heapNum] + 1)
+                return {heapNum: heapNum, count: count}
+            }
+        }
     }
 
     coinsLeft() {
