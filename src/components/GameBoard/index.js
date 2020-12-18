@@ -203,9 +203,12 @@ export default function GameBoard({nextMover, heapCount: heapCountStr, setPlayAg
 
             <div className={'gameBoard'}>
                 {
-                    // Array.from(hm.heapNames).map((value, index) =>
                     hm.heapNames.map((value, index) =>
-                        <CoinHeap name={`${value}`} coinCount={coinCounts[index]} updateCoinCounts={makePlayerMove}/>
+                        <CoinHeap
+                            name={`${value}`}
+                            index={`${index}`}
+                            coinCount={coinCounts[index]}
+                            makePlayerMove={makePlayerMove}/>
                     )
                 }
             </div>
