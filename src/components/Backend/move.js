@@ -3,7 +3,6 @@
 export default class Move {
     constructor(movesLog) {
         this.movesLog = movesLog
-
     }
 
     generateNextMove(gameState, lastMoveNum, moverName, heapNum, count) {

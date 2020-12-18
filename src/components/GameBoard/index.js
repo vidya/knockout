@@ -29,36 +29,11 @@ export default function GameBoard({nextMover, heapCount: heapCountStr, setPlayAg
 
     const move = new Move(movesLog)
 
-    // const generateNextMove = (lastMoveNum, moverName, heapNum, count) => {
-    //     let newCoinCounts = Array.from(coinCounts)
-    //     newCoinCounts[heapNum] -= count
-    //
-    //     const newMoveNum  = moveNum  + 1
-    //
-    //     let newMovesLog = Array.from(movesLog)
-    //     const moveInfo = {
-    //         'Move #': newMoveNum,
-    //         'Made by': moverName,
-    //
-    //         'Before': hm.coinCountStr(coinCounts),
-    //         'Move': `${hm.heapNames[heapNum]}${count}`,
-    //         'After': hm.coinCountStr(newCoinCounts),
-    //     }
-    //     newMovesLog.push(moveInfo)
-    //
-    //     return {
-    //         newMoveNum,
-    //         newCoinCounts,
-    //         newMovesLog,
-    //     }
-    // }
-
     const makePlayerMove = (heapNum, count) => {
         const hm = new GameState({heapCount: heapCount, coinCounts: coinCounts})
         const {newMoveNum,
             newCoinCounts,
             newMovesLog,} = move.generateNextMove(hm, moveNum, mover, heapNum, count)
-        // newMovesLog,} = generateNextMove(moveNum, mover, heapNum, count)
 
         console.log(`\nMAKE-PLAYER-MOVE(): (moveNum, heapNum, count) = (${newMoveNum}, ${heapNum}, ${count})`)
         console.log(`makePlayerMove: (newCoinCounts, coinCounts) = (${newCoinCounts}, ${coinCounts})`)
