@@ -12,19 +12,11 @@ import TickerTape from "../TickerTape";
 
 import CoinHeaps from "./coinHeaps";
 
-// function getRandomInt(min, max) {
-//     min = Math.ceil(min);
-//     max = Math.floor(max);
-//     return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
-// }
-
 export default function GameBoard({nextMover, heapCount: heapCountStr, setPlayAgain}) {
     const [mover, setMover] = useState(nextMover);
 
     const heapCount = parseInt(heapCountStr)
-    // const [coinCounts, setCoinCounts] = useState([...Array(heapCount).keys()].map(_ => getRandomInt(1, 10)));
     const [coinCounts, setCoinCounts] = useState(CoinHeaps.createRandomCoinCounts(heapCount))
-        // [...Array(heapCount).keys()].map(_ => getRandomInt(1, 10)));
 
     const [movesLog, setMovesLog] = useState([]);
     const [moveNum, setMoveNum] = useState(0);
@@ -32,10 +24,7 @@ export default function GameBoard({nextMover, heapCount: heapCountStr, setPlayAg
     console.log(`GAME_BOARD: START --> GameBoard: start: (heapCount, mover) = (${heapCount}, ${mover})`)
     console.log(`--> GameBoard: start: (coinCounts) = ([${coinCounts})]`)
 
-    let moveInfo = {}
     const hm = new CoinHeaps({heapCount: heapCount, coinCounts: coinCounts})
-
-    const moveStr = (heapNum, count) => `${hm.heapNames[heapNum]}${count}`
 
     const generateNextMove = (lastMoveNum, moverName, heapNum, count) => {
         let newCoinCounts = Array.from(coinCounts)
@@ -44,12 +33,12 @@ export default function GameBoard({nextMover, heapCount: heapCountStr, setPlayAg
         const newMoveNum  = moveNum  + 1
 
         let newMovesLog = Array.from(movesLog)
-        moveInfo = {
+        const moveInfo = {
             'Move #': newMoveNum,
             'Made by': moverName,
 
             'Before': hm.coinCountStr(coinCounts),
-            'Move': moveStr(heapNum, count),
+            'Move': `${hm.heapNames[heapNum]}${count}`,
             'After': hm.coinCountStr(newCoinCounts),
         }
         newMovesLog.push(moveInfo)
@@ -79,7 +68,6 @@ export default function GameBoard({nextMover, heapCount: heapCountStr, setPlayAg
         let heapNum = -1
         let count = -1
 
-        // const hm = new CoinHeaps({heapNames, coinCounts})
         const hm = new CoinHeaps({heapCount, coinCounts})
         if (hm.heapCount === 1) {
             console.log(`\n--- CASE #1: ALL COINS FROM THE ONLY NONEMPTY HEAP`)
@@ -147,18 +135,14 @@ export default function GameBoard({nextMover, heapCount: heapCountStr, setPlayAg
     }
 
     const playAgain = () => {
-        // setCoinCounts([...Array(heapCount).keys()].map(_ => getRandomInt(1, 10)))
         setCoinCounts(CoinHeaps.createRandomCoinCounts(heapCount))
-            // [...Array(heapCount).keys()].map(_ => getRandomInt(1, 10)))
         setMovesLog([])
         setMoveNum(0)
 
         setMover(nextMover)
     }
 
-    const coinsLeft = hm.coinsLeft()
-
-    if (!coinsLeft) {
+    if (!hm.coinsLeft()) {
         const winner = (mover === 'COMPUTER') ? 'PLAYER' : 'COMPUTER'
 
         return (
