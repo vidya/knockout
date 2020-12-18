@@ -10,13 +10,14 @@ import {Button} from "react-bootstrap";
 import './style.scss'
 import TickerTape from "../TickerTape";
 
-import CoinHeaps from "./coinHeaps";
+import GameState from "../Backend/gameState";
+import Move from "../Backend/move";
 
 export default function GameBoard({nextMover, heapCount: heapCountStr, setPlayAgain}) {
     const [mover, setMover] = useState(nextMover);
 
     const heapCount = parseInt(heapCountStr)
-    const [coinCounts, setCoinCounts] = useState(CoinHeaps.createRandomCoinCounts(heapCount))
+    const [coinCounts, setCoinCounts] = useState(GameState.createRandomCoinCounts(heapCount))
 
     const [movesLog, setMovesLog] = useState([]);
     const [moveNum, setMoveNum] = useState(0);
@@ -24,36 +25,40 @@ export default function GameBoard({nextMover, heapCount: heapCountStr, setPlayAg
     console.log(`GAME_BOARD: START --> GameBoard: start: (heapCount, mover) = (${heapCount}, ${mover})`)
     console.log(`--> GameBoard: start: (coinCounts) = ([${coinCounts})]`)
 
-    const hm = new CoinHeaps({heapCount: heapCount, coinCounts: coinCounts})
+    const hm = new GameState({heapCount: heapCount, coinCounts: coinCounts})
 
-    const generateNextMove = (lastMoveNum, moverName, heapNum, count) => {
-        let newCoinCounts = Array.from(coinCounts)
-        newCoinCounts[heapNum] -= count
+    const move = new Move(movesLog)
 
-        const newMoveNum  = moveNum  + 1
-
-        let newMovesLog = Array.from(movesLog)
-        const moveInfo = {
-            'Move #': newMoveNum,
-            'Made by': moverName,
-
-            'Before': hm.coinCountStr(coinCounts),
-            'Move': `${hm.heapNames[heapNum]}${count}`,
-            'After': hm.coinCountStr(newCoinCounts),
-        }
-        newMovesLog.push(moveInfo)
-
-        return {
-            newMoveNum,
-            newCoinCounts,
-            newMovesLog,
-        }
-    }
+    // const generateNextMove = (lastMoveNum, moverName, heapNum, count) => {
+    //     let newCoinCounts = Array.from(coinCounts)
+    //     newCoinCounts[heapNum] -= count
+    //
+    //     const newMoveNum  = moveNum  + 1
+    //
+    //     let newMovesLog = Array.from(movesLog)
+    //     const moveInfo = {
+    //         'Move #': newMoveNum,
+    //         'Made by': moverName,
+    //
+    //         'Before': hm.coinCountStr(coinCounts),
+    //         'Move': `${hm.heapNames[heapNum]}${count}`,
+    //         'After': hm.coinCountStr(newCoinCounts),
+    //     }
+    //     newMovesLog.push(moveInfo)
+    //
+    //     return {
+    //         newMoveNum,
+    //         newCoinCounts,
+    //         newMovesLog,
+    //     }
+    // }
 
     const makePlayerMove = (heapNum, count) => {
+        const hm = new GameState({heapCount: heapCount, coinCounts: coinCounts})
         const {newMoveNum,
             newCoinCounts,
-            newMovesLog,} = generateNextMove(moveNum, mover, heapNum, count)
+            newMovesLog,} = move.generateNextMove(hm, moveNum, mover, heapNum, count)
+        // newMovesLog,} = generateNextMove(moveNum, mover, heapNum, count)
 
         console.log(`\nMAKE-PLAYER-MOVE(): (moveNum, heapNum, count) = (${newMoveNum}, ${heapNum}, ${count})`)
         console.log(`makePlayerMove: (newCoinCounts, coinCounts) = (${newCoinCounts}, ${coinCounts})`)
@@ -68,7 +73,7 @@ export default function GameBoard({nextMover, heapCount: heapCountStr, setPlayAg
         let heapNum = -1
         let count = -1
 
-        const hm = new CoinHeaps({heapCount, coinCounts})
+        const hm = new GameState({heapCount, coinCounts})
         if (hm.heapCount === 1) {
             console.log(`\n--- CASE #1: ALL COINS FROM THE ONLY NONEMPTY HEAP`)
 
@@ -123,7 +128,7 @@ export default function GameBoard({nextMover, heapCount: heapCountStr, setPlayAg
 
         const {newMoveNum,
             newCoinCounts,
-            newMovesLog,} = generateNextMove(moveNum, mover, heapNum, count)
+            newMovesLog,} = move.generateNextMove(hm, moveNum, mover, heapNum, count)
 
         console.log(`\nMAKE-COMPUTER-MOVE(): (moveNum, heapNum, count) = (${newMoveNum}, ${heapNum}, ${count})`)
         console.log(`makeComputerMove: (newCoinCounts, coinCounts) = (${newCoinCounts}, ${coinCounts})`)
@@ -135,7 +140,7 @@ export default function GameBoard({nextMover, heapCount: heapCountStr, setPlayAg
     }
 
     const playAgain = () => {
-        setCoinCounts(CoinHeaps.createRandomCoinCounts(heapCount))
+        setCoinCounts(GameState.createRandomCoinCounts(heapCount))
         setMovesLog([])
         setMoveNum(0)
 

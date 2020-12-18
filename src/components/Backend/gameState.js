@@ -24,7 +24,7 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
 }
 
-export default class CoinHeaps {
+export default class GameState {
     constructor({heapCount, coinCounts}) {
         this.heapNames = "ABCDEFGHI".split('').slice(0, heapCount);
         this.coinCounts = coinCounts;
@@ -58,6 +58,7 @@ export default class CoinHeaps {
     static createRandomCoinCounts(heapCount) {
         return [...Array(heapCount).keys()].map(_ => getRandomInt(1, 10))
     }
+
     coinCountStr(coinCounts) {
         const str = coinCounts.map((v, index) => `${this.heapNames[index]}${v}`).join("-")
         console.log(`coinCountStr(): (coinCounts, str) = ([${coinCounts}], ${str})`)
