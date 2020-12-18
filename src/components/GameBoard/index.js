@@ -4,7 +4,7 @@
 
 import React, { useState } from 'react'
 
-import CoinHeapUI from "../CoinHeapUI";
+import CoinHeap from "../CoinHeap";
 import {Button} from "react-bootstrap";
 
 import './style.scss'
@@ -205,7 +205,7 @@ export default function GameBoard({nextMover, heapCount: heapCountStr, setPlayAg
                 {
                     // Array.from(hm.heapNames).map((value, index) =>
                     hm.heapNames.map((value, index) =>
-                        <CoinHeapUI name={`${value}`} coinCount={coinCounts[index]} updateCoinCounts={makePlayerMove}/>
+                        <CoinHeap name={`${value}`} coinCount={coinCounts[index]} updateCoinCounts={makePlayerMove}/>
                     )
                 }
             </div>
