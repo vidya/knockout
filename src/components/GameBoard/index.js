@@ -46,66 +46,9 @@ export default function GameBoard({nextMover, heapCount: heapCountStr, setPlayAg
     }
 
     const makeComputerMove = () => {
-        // let heapNum = -1
-        // let count = -1
-
         const hm = new GameState({heapCount, coinCounts})
-        // const gp = new GamePlay(hm)
-        const {heapNum, count } = GamePlay.getMove(hm)
 
-        // if (hm.heapCount === 1) {
-        //     console.log(`\n--- CASE #1: ALL COINS FROM THE ONLY NONEMPTY HEAP`)
-        //
-        //     // take all coins from the only non-empty heap
-        //     coinCounts.forEach((value, index) => {
-        //         if (value > 0) {
-        //             heapNum = index
-        //             count = value
-        //         }
-        //     })
-        // }
-        // else if ((hm.heapCount === 2) && (hm.singletonCount === 1)) {
-        //     console.log(`\n--- CASE #2: ALL BUT ONE COINS FROM NON-SINGLETON HEAP`)
-        //
-        //     // take all but one coins from the non-singleton heap
-        //     coinCounts.forEach((value, index) => {
-        //         if (value > 1) {
-        //             heapNum = index
-        //             count = value - 1
-        //         }
-        //     })
-        // }
-        // else if ((hm.heapCount === 3) && (hm.singletonCount === 2)) {
-        //     console.log(`\n--- CASE #3: TAKE ALL COINS FROM THE ONLY NON-SINGLETON HEAP`)
-        //
-        //     // take all coins from the only non-singleton heap
-        //     coinCounts.forEach((value, index) => {
-        //         if (value > 1) {
-        //             heapNum = index
-        //             count = value
-        //         }
-        //     })
-        // }
-        //
-        // // else if ((hm.heapCount === 2) && (hm.singletonCount === 0)
-        // //         && (hm.doubletonCount === 1)) {
-        // //     console.log(`\n--- CASE #4: TAKE ALL BUT ONE COINS FROM THE ONLY NON-DOUBLETON HEAP`)
-        // //
-        // //     // take all but one coins from the only non-doubleton heap
-        // //     coinCounts.forEach((value, index) => {
-        // //         if (value > 2) {
-        // //             heapNum = index
-        // //             count = value - 1
-        // //         }
-        // //     })
-        // // }
-        // else {
-        //     console.log(`\n--- CASE #0: RANDOM MOVE`)
-        //     const  {heapNum:heapNum1, count:count1} = hm.getRandomMove()
-        //     heapNum = heapNum1
-        //     count = count1
-        // }
-        //
+        const {heapNum, count } = GamePlay.getMove(hm)
         const {newMoveNum,
             newCoinCounts,
             newMovesLog,} = move.generateNextMove(hm, moveNum, mover, heapNum, count)
