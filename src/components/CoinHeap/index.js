@@ -25,6 +25,7 @@ const CoinRow = ({name, coinCount}) => {
 }
 
 const KeyPad = ({name, index, coinCount, makePlayerMove}) => {
+    console.log(`KeyPad: start: coinCount=${coinCount}`)
     const countChoices = [...Array(coinCount).keys()].map(n => n + 1)
 
     const countClick = e => {
@@ -52,6 +53,8 @@ const KeyPad = ({name, index, coinCount, makePlayerMove}) => {
 }
 
 export default function CoinHeap({name, index, coinCount, makePlayerMove}) {
+    console.log(`KeyPad: start: coinCount=${coinCount}`)
+    console.assert((coinCount > 0) && (coinCount < 10), `===>  -${coinCount}- is invalid`)
     return (
         <div className={'heapContainer'}>
             <div className={'keyPad'}>

@@ -103,19 +103,27 @@ const HeapCount = ({chooseHeapCount}) => {
     const [heapCountValue, setHeapCountValue] = useState('7');
 
     const heapCountRadios = [
+        { name: '2', value: '2' },
+        { name: '3', value: '3' },
+        { name: '4', value: '4' },
         { name: '5', value: '5' },
+        { name: '6', value: '6' },
         { name: '7', value: '7' },
+        { name: '8', value: '8' },
+        { name: '9', value: '9' },
     ];
 
     const changeHeapCount = e => {
         setHeapCountValue(e.currentTarget.value)
 
-        if (e.currentTarget.value === '5') {
-            chooseHeapCount(5)
-        }
-        else {
-            chooseHeapCount(7)
-        }
+        const heapCount = parseInt(e.currentTarget.value)
+        // if (e.currentTarget.value === '5') {
+        //     chooseHeapCount(5)
+        // }
+        // else {
+        //     chooseHeapCount(7)
+        // }
+        chooseHeapCount(heapCount)
     }
 
     return (
