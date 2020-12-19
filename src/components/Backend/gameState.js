@@ -1,3 +1,5 @@
+import {useState} from "react";
+
 /***
  *
  NimZap - Notes
@@ -22,9 +24,9 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
 }
 
-export default class HeapMap {
-    constructor({heapNames, coinCounts}) {
-        this.heapNames = heapNames;
+export default class GameState {
+    constructor({heapCount, coinCounts}) {
+        this.heapNames = "ABCDEFGHI".split('').slice(0, heapCount);
         this.coinCounts = coinCounts;
 
         this.heapMap = new Map()
@@ -51,6 +53,27 @@ export default class HeapMap {
                 this.doubletonCount += 1
             }
         })
+    }
+
+    static createRandomCoinCounts(heapCount) {
+        return [...Array(heapCount).keys()].map(_ => getRandomInt(1, 10))
+    }
+
+    coinCountStr(coinCounts) {
+        const str = coinCounts.map((v, index) => `${this.heapNames[index]}${v}`).join("-")
+        console.log(`coinCountStr(): (coinCounts, str) = ([${coinCounts}], ${str})`)
+
+        return str
+    }
+
+    getRandomMove() {
+        while (true) {
+            const heapNum = getRandomInt(0, this.heapCount)
+            if (this.coinCounts[heapNum] > 0) {
+                const count = getRandomInt(1, this.coinCounts[heapNum] + 1)
+                return {heapNum: heapNum, count: count}
+            }
+        }
     }
 
     coinsLeft() {

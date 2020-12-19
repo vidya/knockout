@@ -4,201 +4,74 @@
 
 import React, { useState } from 'react'
 
-import {zip} from 'underscore'
-
 import CoinHeap from "../CoinHeap";
 import {Button} from "react-bootstrap";
 
 import './style.scss'
-import MovesRecord from "../MovesRecord";
 import TickerTape from "../TickerTape";
-import underscore from "underscore/underscore";
 
-import HeapMap from "./heapMap";
+import GameState from "../Backend/gameState";
+import Move from "../Backend/move";
+import GamePlay from "../Backend/gamePlay"
 
-function getRandomInt(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
-}
-
-
-export default function GameBoard({nextMover, setPlayAgain}) {
+export default function GameBoard({nextMover, heapCount: heapCountStr, setPlayAgain}) {
     const [mover, setMover] = useState(nextMover);
 
-    const [coinCounts, setCoinCounts] = useState([...Array(5).keys()].map(_ => getRandomInt(1, 10)));
+    const heapCount = parseInt(heapCountStr)
+    const [coinCounts, setCoinCounts] = useState(GameState.createRandomCoinCounts(heapCount))
 
     const [movesLog, setMovesLog] = useState([]);
     const [moveNum, setMoveNum] = useState(0);
 
-    // console.log(`\n\n=== START OF GAME =======================`)
-    console.log(`GAME_BOARD: START --> GameBoard: start: mover = ${mover}`)
+    console.log(`GAME_BOARD: START --> GameBoard: start: (heapCount, mover) = (${heapCount}, ${mover})`)
+    console.log(`--> GameBoard: start: (coinCounts) = ([${coinCounts})]`)
 
-    // const t1 = zip(['moe', 'larry', 'curly'], [30, 40, 50], [true, false, false]);
-    // console.log(`t1 = ${t1}`)
+    const hm = new GameState({heapCount: heapCount, coinCounts: coinCounts})
 
-    let moveInfo = {}
-    const heapNames = ['A', 'B', 'C', 'D', 'E']
-
-    const coinCountStr = (coinCounts) => {
-        const str = coinCounts.map((v, index) => `${heapNames[index]}${v}`).join("-")
-        console.log(`coinCountStr(): (coinCounts, str) = (${coinCounts}, ${str})`)
-
-        return str
-    }
-
-    const moveStr = (heapNum, count) => `${heapNames[heapNum]}${count}`
+    const move = new Move(movesLog)
 
     const makePlayerMove = (heapNum, count) => {
-        // console.log(`\nMAKE-PLAYER-MOVE(): (heapNum, count) = (${heapNum}, ${count})`)
-
-        let newCoinCounts = Array.from(coinCounts)
-        newCoinCounts[heapNum] -= count
-
-        const newMoveNum  = moveNum  + 1
-        setMoveNum(newMoveNum)
+        const hm = new GameState({heapCount: heapCount, coinCounts: coinCounts})
+        const {newMoveNum,
+            newCoinCounts,
+            newMovesLog,} = move.generateNextMove(hm, moveNum, mover, heapNum, count)
 
         console.log(`\nMAKE-PLAYER-MOVE(): (moveNum, heapNum, count) = (${newMoveNum}, ${heapNum}, ${count})`)
-
-        let newMovesLog = Array.from(movesLog)
-        moveInfo = {
-            'Move #': newMoveNum,
-            'Made by': mover,
-
-            'Before': coinCountStr(coinCounts),
-            'Move': moveStr(heapNum, count),
-            'After': coinCountStr(newCoinCounts),
-        }
-
-        setCoinCounts([...Array(5).keys()].map(n => newCoinCounts[n]))
         console.log(`makePlayerMove: (newCoinCounts, coinCounts) = (${newCoinCounts}, ${coinCounts})`)
 
-        newMovesLog.push(moveInfo)
+        setMoveNum(newMoveNum)
+        setCoinCounts([...Array(heapCount).keys()].map(n => newCoinCounts[n]))
         setMovesLog(newMovesLog)
-
         setMover('COMPUTER')
     }
 
-    const getRandomMove = () => {
-        let heapNum = -1
-        let count = -1
-
-        while (true) {
-            heapNum = getRandomInt(0, 5)
-            if (coinCounts[heapNum] <= 0) {
-                continue
-            }
-            count = getRandomInt(1, coinCounts[heapNum] + 1)
-            break
-        }
-
-        return {heapNum: heapNum, count: count}
-    }
-
     const makeComputerMove = () => {
-        // const {heapNum, count} = getRandomMove()
-        //------------------
-        let heapNum = -1
-        let count = -1
+        const hm = new GameState({heapCount, coinCounts})
 
-        const hm = new HeapMap({heapNames, coinCounts})
-        if (hm.heapCount === 1) {
-            console.log(`\n--- CASE #1: ALL COINS FROM THE ONLY NONEMPTY HEAP`)
-
-            // take all coins from the only non-empty heap
-            coinCounts.forEach((value, index) => {
-                if (value > 0) {
-                    heapNum = index
-                    count = value
-                }
-            })
-        }
-        else if ((hm.heapCount === 2) && (hm.singletonCount === 1)) {
-            console.log(`\n--- CASE #2: ALL BUT ONE COINS FROM NON-SINGLETON HEAP`)
-
-            // take all but one coins from the non-singleton heap
-            coinCounts.forEach((value, index) => {
-                if (value > 1) {
-                    heapNum = index
-                    count = value - 1
-                }
-            })
-        }
-        else if ((hm.heapCount === 3) && (hm.singletonCount === 2)) {
-            console.log(`\n--- CASE #3: TAKE ALL COINS FROM THE ONLY NON-SINGLETON HEAP`)
-
-            // take all coins from the only non-singleton heap
-            coinCounts.forEach((value, index) => {
-                if (value > 1) {
-                    heapNum = index
-                    count = value
-                }
-            })
-        }
-        // else if ((hm.heapCount === 2) && (hm.singletonCount === 0)
-        //         && (hm.doubletonCount === 1)) {
-        //     console.log(`\n--- CASE #4: TAKE ALL BUT ONE COINS FROM THE ONLY NON-DOUBLETON HEAP`)
-        //
-        //     // take all but one coins from the only non-doubleton heap
-        //     coinCounts.forEach((value, index) => {
-        //         if (value > 2) {
-        //             heapNum = index
-        //             count = value - 1
-        //         }
-        //     })
-        // }
-        else {
-            console.log(`\n--- CASE #0: RANDOM MOVE`)
-            const  {heapNum:heapNum1, count:count1} = getRandomMove()
-            heapNum = heapNum1
-            count = count1
-        }
-        //------------------
-
-
-        let newCoinCounts = Array.from(coinCounts)
-        newCoinCounts[heapNum] -= count
-
-        const newMoveNum  = moveNum  + 1
-        setMoveNum(newMoveNum)
+        const {heapNum, count } = GamePlay.getMove(hm)
+        const {newMoveNum,
+            newCoinCounts,
+            newMovesLog,} = move.generateNextMove(hm, moveNum, mover, heapNum, count)
 
         console.log(`\nMAKE-COMPUTER-MOVE(): (moveNum, heapNum, count) = (${newMoveNum}, ${heapNum}, ${count})`)
-
-        let newMovesLog = Array.from(movesLog)
-        moveInfo = {
-            'Move #': newMoveNum,
-            'Made by': mover,
-
-            'Before': coinCountStr(coinCounts),
-            'Move': moveStr(heapNum, count),
-            'After': coinCountStr(newCoinCounts),
-        }
-
-        setCoinCounts([...Array(5).keys()].map(n => newCoinCounts[n]))
         console.log(`makeComputerMove: (newCoinCounts, coinCounts) = (${newCoinCounts}, ${coinCounts})`)
 
-        newMovesLog.push(moveInfo)
+        setMoveNum(newMoveNum)
+        setCoinCounts([...Array(heapCount).keys()].map(n => newCoinCounts[n]))
         setMovesLog(newMovesLog)
-
         setMover('PLAYER')
     }
 
     const playAgain = () => {
-        setCoinCounts([...Array(5).keys()].map(_ => getRandomInt(1, 10)))
+        setCoinCounts(GameState.createRandomCoinCounts(heapCount))
         setMovesLog([])
         setMoveNum(0)
 
         setMover(nextMover)
     }
 
-    const hm = new HeapMap({heapNames: heapNames, coinCounts: coinCounts})
-    const heapMap = hm.heapMap
-
-    const coinsLeft = hm.coinsLeft()
-
-    if (!coinsLeft) {
+    if (!hm.coinsLeft()) {
         const winner = (mover === 'COMPUTER') ? 'PLAYER' : 'COMPUTER'
-        // console.log(`=== END OF GAME ==========================\n\n`)
 
         return (
             <div className={'gameBoardContainer'}>
@@ -222,8 +95,12 @@ export default function GameBoard({nextMover, setPlayAgain}) {
 
             <div className={'gameBoard'}>
                 {
-                    Array.from(heapMap.keys()).map(key =>
-                        <CoinHeap name={`${key}`} coinCount={heapMap.get(key)} updateCoinCounts={makePlayerMove}/>
+                    hm.heapNames.map((value, index) =>
+                        <CoinHeap
+                            name={`${value}`}
+                            index={`${index}`}
+                            coinCount={coinCounts[index]}
+                            makePlayerMove={makePlayerMove}/>
                     )
                 }
             </div>

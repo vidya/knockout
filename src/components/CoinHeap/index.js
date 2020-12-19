@@ -13,7 +13,7 @@ const CoinRow = ({name, coinCount}) => {
         <>
             <ul className={'coinList'}>
             {
-                choiceNums.map((cnum, index) =>
+                choiceNums.map(cnum =>
                         <li key={cnum} className={'coinListItem'}>
                             {' '}
                         </li>
@@ -24,22 +24,14 @@ const CoinRow = ({name, coinCount}) => {
     );
 }
 
-const KeyPad = ({name, coinCount, updateCoinCounts}) => {
-    const choiceNums = [...Array(coinCount).keys()].map(n => n + 1)
+const KeyPad = ({name, index, coinCount, makePlayerMove}) => {
+    const countChoices = [...Array(coinCount).keys()].map(n => n + 1)
 
-    const choiceNumClick = e => {
-        console.log(`choiceNumClick(): e: ${e}`)
+    const countClick = e => {
+        console.log(`countClick(): e: ${e}`)
         const cNum = parseInt(e.target.dataset.choice)
 
-        const letMap = {
-            'A': 0,
-            'B': 1,
-            'C': 2,
-            'D': 3,
-            'E': 4
-        }
-
-        updateCoinCounts(letMap[name], cNum)
+        makePlayerMove(index, cNum)
         console.log(`chosen: heap-count = ${name}-${cNum}`)
     }
 
@@ -47,8 +39,9 @@ const KeyPad = ({name, coinCount, updateCoinCounts}) => {
         <>
             <ul className={'choiceNumList'}>
             {
-                choiceNums.map((cnum, index) =>
-                        <li key={cnum} className={'choiceNumItem'} onClick={choiceNumClick}  data-choice={cnum}>
+                countChoices.map(cnum =>
+                        <li key={cnum} className={'choiceNumItem'}
+                            onClick={countClick}  data-choice={cnum}>
                             {cnum}
                         </li>
                 )
@@ -58,15 +51,17 @@ const KeyPad = ({name, coinCount, updateCoinCounts}) => {
     );
 }
 
-export default function CoinHeap({name, coinCount, updateCoinCounts}) {
-    console.log("CoinHeap: start")
-
+export default function CoinHeap({name, index, coinCount, makePlayerMove}) {
     return (
         <div className={'heapContainer'}>
             <div className={'keyPad'}>
                 <h4 className={'heapName'}>{name}</h4>
                 <CoinRow name={name} coinCount={coinCount}/>
-                <KeyPad name={name}  coinCount={coinCount} updateCoinCounts={updateCoinCounts}/>
+                <KeyPad
+                    name={name}
+                    index={`${index}`}
+                    coinCount={coinCount}
+                    makePlayerMove={makePlayerMove}/>
             </div>
         </div>
     );
