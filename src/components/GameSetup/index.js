@@ -114,16 +114,9 @@ const HeapCount = ({chooseHeapCount}) => {
     ];
 
     const changeHeapCount = e => {
-        setHeapCountValue(e.currentTarget.value)
-
         const heapCount = parseInt(e.currentTarget.value)
-        // if (e.currentTarget.value === '5') {
-        //     chooseHeapCount(5)
-        // }
-        // else {
-        //     chooseHeapCount(7)
-        // }
         chooseHeapCount(heapCount)
+        setHeapCountValue(e.currentTarget.value)
     }
 
     return (

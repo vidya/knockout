@@ -25,7 +25,7 @@ const CoinRow = ({name, coinCount}) => {
 }
 
 const KeyPad = ({name, index, coinCount, makePlayerMove}) => {
-    console.log(`KeyPad: start: coinCount=${coinCount}`)
+    console.log(`KeyPad: start: (name, index, coinCount)=(${name}, ${index}, ${coinCount})`)
     const countChoices = [...Array(coinCount).keys()].map(n => n + 1)
 
     const countClick = e => {
