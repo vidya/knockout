@@ -58,8 +58,8 @@ export default function CoinHeap({name, index, coinCount, makePlayerMove}) {
     return (
         <div className={'heapContainer'}>
             <div className={'keyPad'}>
+                {/*<CoinRow name={name} coinCount={coinCount}/>*/}
                 <h4 className={'heapName'}>{name}</h4>
-                <CoinRow name={name} coinCount={coinCount}/>
                 <KeyPad
                     name={name}
                     index={`${index}`}

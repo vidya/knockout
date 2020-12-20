@@ -93,8 +93,6 @@ export default function GameBoard({nextMover, heapCount: heapCountStr, setPlayAg
 
     return (
         <div className={'gameBoardContainer'}>
-            {moveNum > 0 && <TickerTape  movesLog={movesLog}/>}
-
             <div className={'gameBoard'}>
                 {
                     hm.heapNames.map((value, index) =>
@@ -106,6 +104,8 @@ export default function GameBoard({nextMover, heapCount: heapCountStr, setPlayAg
                     )
                 }
             </div>
+
+            {moveNum > 0 && <TickerTape  movesLog={movesLog}/>}
         </div>
     );
 }
