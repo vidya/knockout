@@ -18,11 +18,13 @@ import {useState} from "react";
     (Heap-count == 2) And (singleton-count == 2) — what you choose won’t make a difference. Make a random choice.
  */
 
-function getRandomInt(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
-}
+// function getRandomInt(min, max) {
+//     min = Math.ceil(min);
+//     max = Math.floor(max);
+//     return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
+// }
+
+import {getRandomInt} from "./util";
 
 export default class GameState {
     constructor({heapCount, coinCounts}) {
@@ -64,17 +66,6 @@ export default class GameState {
         console.log(`coinCountStr(): (coinCounts, str) = ([${coinCounts}], ${str})`)
 
         return str
-    }
-
-    getRandomMove() {
-        const xy = this.coinCounts.map((count, index) => ({index, count}))
-                                  .filter(x => x.count > 0)
-
-        const t1 = getRandomInt(0, xy.length)
-        const heapNum = xy[t1].index
-        const count = getRandomInt(1, xy[t1].count + 1)
-
-        return {heapNum, count}
     }
 
     coinsLeft() {

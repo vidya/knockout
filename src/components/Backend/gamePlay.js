@@ -1,9 +1,21 @@
 
+import {getRandomInt} from "./util";
 
 export default class GamePlay {
     // constructor(gameState) {
     //     this.gameState = gameState
     // }
+
+    static getRandomMove(gameState) {
+        const xy = gameState.coinCounts.map((count, index) => ({index, count}))
+            .filter(x => x.count > 0)
+
+        const t1 = getRandomInt(0, xy.length)
+        const heapNum = xy[t1].index
+        const count = getRandomInt(1, xy[t1].count + 1)
+
+        return {heapNum, count}
+    }
 
     static getMove(gameState) {
         const hm = gameState
@@ -59,7 +71,8 @@ export default class GamePlay {
         // }
         else {
             console.log(`\n--- CASE #0: RANDOM MOVE`)
-            const  {heapNum:heapNum1, count:count1} = hm.getRandomMove()
+            // const  {heapNum:heapNum1, count:count1} = hm.getRandomMove()
+            const  {heapNum:heapNum1, count:count1} = GamePlay.getRandomMove(gameState)
             heapNum = heapNum1
             count = count1
         }
