@@ -66,29 +66,9 @@ export default class GameState {
         return str
     }
 
-    // getRandomMove() {
-    //     // let loopCount = 0
-    //     while (true) {
-    //         // loopCount += 1
-    //         // if (loopCount > 10) {
-    //         //     const count = getRandomInt(1, this.coinCounts[0] + 1)
-    //         //     return {heapNum: 0, count: count}
-    //         // }
-    //         const heapNum = getRandomInt(0, this.heapCount)
-    //         if (this.coinCounts[heapNum] > 0) {
-    //             const count = getRandomInt(1, this.coinCounts[heapNum] + 1)
-    //             return {heapNum: heapNum, count: count}
-    //         }
-    //     }
-    // }
-
     getRandomMove() {
-        let xy = []
-        this.coinCounts.forEach((count, index) => {
-            if (count > 0) {
-                xy.push({index, count})
-            }
-        })
+        const xy = this.coinCounts.map((count, index) => ({index, count}))
+                                  .filter(x => x.count > 0)
 
         const t1 = getRandomInt(0, xy.length)
         const heapNum = xy[t1].index
