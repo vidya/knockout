@@ -37,7 +37,7 @@ export default class GamePlay {
 
     getRandomMove() {
         const xy = this.coinCounts.map((count, index) => ({index, count}))
-            .filter(x => x.count > 0)
+                                  .filter(x => x.count > 0)
 
         const t1 = getRandomInt(0, xy.length)
         const heapNum = xy[t1].index
@@ -98,7 +98,6 @@ export default class GamePlay {
         // }
         else {
             console.log(`\n--- CASE #0: RANDOM MOVE`)
-            // const  {heapNum:heapNum1, count:count1} = hm.getRandomMove()
             const  {heapNum:heapNum1, count:count1} = this.getRandomMove()
             heapNum = heapNum1
             count = count1
