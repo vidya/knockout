@@ -1,5 +1,12 @@
 
+div.gameBoardContainer{
+  display: flex;
+  flex-direction: row;
+}
+
 div.gameBoard{
+  flex: 1;
+
   padding: 5px;
   //margin: auto;
   margin-left: 5px;

@@ -20,7 +20,8 @@ export default class Move {
             'Move': `${gameState.heapNames[heapNum]}${count}`,
             'After': gameState.coinCountStr(newCoinCounts),
         }
-        newMovesLog.push(moveInfo)
+        // newMovesLog.push(moveInfo)
+        newMovesLog.unshift(moveInfo)
 
         return {
             newMoveNum,

@@ -77,12 +77,14 @@ export default function GameBoard({nextMover, heapCount: heapCountStr, setPlayAg
 
         return (
             <div className={'gameBoardContainer'}>
-                <TickerTape  movesLog={movesLog}/>
+                <div className={'gameBoard'}>
+                    <TickerTape  movesLog={movesLog}/>
 
-                <h2>{'------ GAME OVER -------'}</h2>
-                <h2>{`------ WINNER IS: ${winner } -------`}</h2>
+                    <h2>{'------ GAME OVER -------'}</h2>
+                    <h2>{`------ WINNER IS: ${winner } -------`}</h2>
 
-                <Button variant="primary" id={'playAgain'} size="lg" onClick={playAgain}>Play again</Button>
+                    <Button variant="primary" id={'playAgain'} size="lg" onClick={playAgain}>Play again</Button>
+                </div>
             </div>
         )
     }

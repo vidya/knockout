@@ -83,6 +83,7 @@ import makeData from './makeData'
 
 const Styles = styled.div`
   padding: 1rem;
+  margin-top: 48px;
 
   table {
     border-spacing: 0;
