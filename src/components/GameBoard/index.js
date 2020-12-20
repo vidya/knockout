@@ -48,7 +48,9 @@ export default function GameBoard({nextMover, heapCount: heapCountStr, setPlayAg
     const makeComputerMove = () => {
         const hm = new GameState({heapCount, coinCounts})
 
-        const {heapNum, count } = GamePlay.getMove(hm)
+        const gp = new GamePlay(heapCount, coinCounts)
+        const {heapNum, count } = gp.getMove(hm)
+
         const {newMoveNum,
             newCoinCounts,
             newMovesLog,} = move.generateNextMove(hm, moveNum, mover, heapNum, count)

@@ -2,12 +2,41 @@
 import {getRandomInt} from "./util";
 
 export default class GamePlay {
-    // constructor(gameState) {
-    //     this.gameState = gameState
-    // }
+    constructor(heapCount, coinCounts) {
+        this.heapNames = "ABCDEFGHI".split('').slice(0, heapCount);
+        this.coinCounts = coinCounts;
 
-    static getRandomMove(gameState) {
-        const xy = gameState.coinCounts.map((count, index) => ({index, count}))
+        this.heapMap = new Map()
+
+        for (const [index, name] of this.heapNames.entries()) {
+            if (coinCounts[index] > 0) {
+                this.heapMap.set(name, this.coinCounts[index])
+            }
+        }
+
+        this.heapCount = this.heapMap.size
+
+        this.coinCounts = coinCounts
+
+        this.singletonCount = 0
+
+        this.heapMap.forEach((value, key, map) => {
+            if (value === 1) {
+                this.singletonCount += 1
+            }
+        })
+
+        this.doubletonCount = 0
+
+        this.heapMap.forEach((value, key, map) => {
+            if (value === 2) {
+                this.doubletonCount += 1
+            }
+        })
+    }
+
+    getRandomMove() {
+        const xy = this.coinCounts.map((count, index) => ({index, count}))
             .filter(x => x.count > 0)
 
         const t1 = getRandomInt(0, xy.length)
@@ -17,39 +46,37 @@ export default class GamePlay {
         return {heapNum, count}
     }
 
-    static getMove(gameState) {
-        const hm = gameState
-
+    getMove() {
         let heapNum = -1
         let count = -1
 
-        if (hm.heapCount === 1) {
+        if (this.heapCount === 1) {
             console.log(`\n--- CASE #1: ALL COINS FROM THE ONLY NONEMPTY HEAP`)
 
             // take all coins from the only non-empty heap
-            hm.coinCounts.forEach((value, index) => {
+            this.coinCounts.forEach((value, index) => {
                 if (value > 0) {
                     heapNum = index
                     count = value
                 }
             })
         }
-        else if ((hm.heapCount === 2) && (hm.singletonCount === 1)) {
+        else if ((this.heapCount === 2) && (this.singletonCount === 1)) {
             console.log(`\n--- CASE #2: ALL BUT ONE COINS FROM NON-SINGLETON HEAP`)
 
             // take all but one coins from the non-singleton heap
-            hm.coinCounts.forEach((value, index) => {
+            this.coinCounts.forEach((value, index) => {
                 if (value > 1) {
                     heapNum = index
                     count = value - 1
                 }
             })
         }
-        else if ((hm.heapCount === 3) && (hm.singletonCount === 2)) {
+        else if ((this.heapCount === 3) && (this.singletonCount === 2)) {
             console.log(`\n--- CASE #3: TAKE ALL COINS FROM THE ONLY NON-SINGLETON HEAP`)
 
             // take all coins from the only non-singleton heap
-            hm.coinCounts.forEach((value, index) => {
+            this.coinCounts.forEach((value, index) => {
                 if (value > 1) {
                     heapNum = index
                     count = value
@@ -72,7 +99,7 @@ export default class GamePlay {
         else {
             console.log(`\n--- CASE #0: RANDOM MOVE`)
             // const  {heapNum:heapNum1, count:count1} = hm.getRandomMove()
-            const  {heapNum:heapNum1, count:count1} = GamePlay.getRandomMove(gameState)
+            const  {heapNum:heapNum1, count:count1} = this.getRandomMove()
             heapNum = heapNum1
             count = count1
         }

@@ -40,21 +40,21 @@ export default class GameState {
         }
 
         this.heapCount = this.heapMap.size
-        this.singletonCount = 0
-
-        this.heapMap.forEach((value, key, map) => {
-            if (value === 1) {
-                this.singletonCount += 1
-            }
-        })
-
-        this.doubletonCount = 0
-
-        this.heapMap.forEach((value, key, map) => {
-            if (value === 2) {
-                this.doubletonCount += 1
-            }
-        })
+        // this.singletonCount = 0
+        //
+        // this.heapMap.forEach((value, key, map) => {
+        //     if (value === 1) {
+        //         this.singletonCount += 1
+        //     }
+        // })
+        //
+        // this.doubletonCount = 0
+        //
+        // this.heapMap.forEach((value, key, map) => {
+        //     if (value === 2) {
+        //         this.doubletonCount += 1
+        //     }
+        // })
     }
 
     static createRandomCoinCounts(heapCount) {
