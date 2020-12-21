@@ -147,6 +147,7 @@ const HeapCount = ({chooseHeapCount}) => {
 }
 
 export default function GameSetup() {
+    const [gameMode, setGameMode] = useState('play');
     const [firstMover, setFirstMover] = useState('PLAYER');
     const [heapCount, setHeapCount] = useState('7');
     const [playAgain, setPlayAgain] = useState(true);
@@ -164,20 +165,26 @@ export default function GameSetup() {
     if (playAgain) {
         return (
             <div id={'topContainer'}>
-                <div className={'helpInstructions'}>
-                    <HelpInstructions/>
-                </div>
+                {
+                    gameMode === 'practice' &&
+                        <div>
+                            <div className={'helpInstructions'}>
+                                <HelpInstructions/>
+                            </div>
 
-                <div id={'firstMover'}>
-                    <FirstMover chooseFirstMover={chooseFirstMover}/>
-                </div>
+                            <div id={'firstMover'}>
+                                <FirstMover chooseFirstMover={chooseFirstMover}/>
+                            </div>
 
-                <div id={'heapCount'}>
-                    <HeapCount chooseHeapCount={chooseHeapCount}/>
-                </div>
+                            <div id={'heapCount'}>
+                                <HeapCount chooseHeapCount={chooseHeapCount}/>
+                            </div>
+                        </div>
+                }
 
                 <div>
                     <GameBoard
+                        gameMode={gameMode}
                         nextMover={firstMover}
                         heapCount={heapCount}
                         setPlayAgain={setPlayAgain}/>

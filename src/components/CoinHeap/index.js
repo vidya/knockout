@@ -57,15 +57,18 @@ export default function CoinHeap({name, index, coinCount, makePlayerMove}) {
     console.assert((coinCount > 0) && (coinCount < 10), `===>  -${coinCount}- is invalid`)
     return (
         <div className={'heapContainer'}>
-            <div className={'keyPad'}>
-                {/*<CoinRow name={name} coinCount={coinCount}/>*/}
-                <h4 className={'heapName'}>{name}</h4>
-                <KeyPad
-                    name={name}
-                    index={`${index}`}
-                    coinCount={coinCount}
-                    makePlayerMove={makePlayerMove}/>
-            </div>
+            {
+                coinCount > 0 &&
+                <div className={'keyPad'}>
+                    {/*<CoinRow name={name} coinCount={coinCount}/>*/}
+                    <h4 className={'heapName'}>{name}</h4>
+                    <KeyPad
+                        name={name}
+                        index={`${index}`}
+                        coinCount={coinCount}
+                        makePlayerMove={makePlayerMove}/>
+                </div>
+            }
         </div>
     );
 }

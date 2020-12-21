@@ -14,8 +14,9 @@ import GameState from "../Backend/gameState";
 import Move from "../Backend/move";
 import GamePlay from "../Backend/gamePlay"
 
-export default function GameBoard({nextMover, heapCount: heapCountStr, setPlayAgain}) {
+export default function GameBoard({gameMode, nextMover, heapCount: heapCountStr, setPlayAgain}) {
     const [mover, setMover] = useState(nextMover);
+    // const [gameMode, setGameMode] = useState('play');
 
     const heapCount = parseInt(heapCountStr)
     const [coinCounts, setCoinCounts] = useState(GameState.createRandomCoinCounts(heapCount))
@@ -78,7 +79,10 @@ export default function GameBoard({nextMover, heapCount: heapCountStr, setPlayAg
         return (
             <div className={'gameBoardContainer'}>
                 <div className={'gameBoard'}>
-                    <TickerTape  movesLog={movesLog}/>
+                    {
+                        gameMode === 'practice' &&
+                        <TickerTape  movesLog={movesLog}/>
+                    }
 
                     <h2>{'------ GAME OVER -------'}</h2>
                     <h2>{`------ WINNER IS: ${winner } -------`}</h2>
@@ -107,7 +111,12 @@ export default function GameBoard({nextMover, heapCount: heapCountStr, setPlayAg
                 }
             </div>
 
-            {moveNum > 0 && <TickerTape  movesLog={movesLog}/>}
+            {/*{moveNum > 0 && <TickerTape  movesLog={movesLog}/>}*/}
+            {
+                gameMode === 'practice' && moveNum > 0 &&
+                <TickerTape  movesLog={movesLog}/>
+            }
+
         </div>
     );
 }
