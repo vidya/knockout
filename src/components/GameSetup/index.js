@@ -149,7 +149,7 @@ const HeapCount = ({chooseHeapCount}) => {
 export default function GameSetup() {
     const [gameMode, setGameMode] = useState('play');
     const [firstMover, setFirstMover] = useState('PLAYER');
-    const [heapCount, setHeapCount] = useState('7');
+    const [heapCount, setHeapCount] = useState('5');
     const [playAgain, setPlayAgain] = useState(true);
 
     const chooseFirstMover = (choice) => {
@@ -199,7 +199,7 @@ export default function GameSetup() {
                 </div>
 
                 <div>
-                    <h2>Thank you for playing NimZap!</h2>
+                    <h2>Thank you for playing KnockOut!</h2>
                     <h4>Please visit again!</h4>
                 </div>
             </div>

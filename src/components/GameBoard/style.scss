@@ -1,23 +1,48 @@
 
 div.gameBoardContainer{
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 }
 
 div.gameBoard{
-  flex: 1;
+  //flex: 1;
+  //
+  //padding: 5px;
+  ////margin: auto;
+  //margin-left: 5px;
+  //margin-top: 40px;
+  //width: 90%;
+  //
+  //display: flex;
+  //flex-direction: row;
 
-  padding: 5px;
-  //margin: auto;
-  margin-left: 5px;
-  margin-top: 40px;
-  width: 90%;
-
+  flex: 1 1;
+  /* padding: 5px; */
+  /* margin-left: 5px; */
+  /* margin-top: 40px; */
+  margin: auto;
+  width: 64%;
   display: flex;
   flex-direction: row;
+  justify-content: center;
+  border: 1px solid blue;
+  padding-top: 30px;
 }
+
+div#gameDescription {
+  flex: 1 1;
+  border: 1px solid blue;
+  width: 60%;
+  margin: auto;
+  padding: 5px;
+  padding-left: 20px;
+  margin-bottom: 20px;
+  font-size: 1.1em;
+  text-align: left;}
+
 
 button#playAgain {
   background-color: lightgreen;
   font-size: 1.2em;
+  margin-bottom: 10px;
 }

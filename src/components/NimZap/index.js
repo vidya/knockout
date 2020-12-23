@@ -38,6 +38,10 @@ export default function NimZap() {
     console.log(`NimZap: start` )
 
     return (
-        <GameSetup />
+        <div id={'homeContainer'}>
+
+            <GameSetup />
+        </div>
+
     )
 }

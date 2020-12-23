@@ -14,9 +14,34 @@ import GameState from "../Backend/gameState";
 import Move from "../Backend/move";
 import GamePlay from "../Backend/gamePlay"
 
+const DisplayInstructions = () => (
+    <div id={'gameDescription'}>
+        <p>
+            This is a Man vs Machine game. The game board contains five columns labeled A, B,C,D, and E.
+            Each column contains bricks numbered 1, 2, 3 etc. with brick 1 being the topmost and numbers
+            increasing as you go down the column.
+        </p>
+
+        <p>
+            Each player takes turns at punching one or more bricks from a single column. When a brick is
+            punched, that brick and all the bricks above it are removed from the board.
+            For example if brick number 3 in column B is punched, then brick number 3 and the bricks
+            numbered 2 and 1 sitting above the punched brick 3 in column B, are all removed the board.
+            Bricks if any in the affected column are re-numbered with the top most brick being labeled
+            as the new number 1 brick.
+        </p>
+
+        <p>
+            Aim of the game is to remove, with a last knockout punch, all the bricks from the last
+            remaining column. Player delivering the knockout punch wins the game.
+        </p>
+    </div>
+)
+
+
 export default function GameBoard({gameMode, nextMover, heapCount: heapCountStr, setPlayAgain}) {
+    const [displayInstructions, setDisplayInstructions] = useState(true)
     const [mover, setMover] = useState(nextMover);
-    // const [gameMode, setGameMode] = useState('play');
 
     const heapCount = parseInt(heapCountStr)
     const [coinCounts, setCoinCounts] = useState(GameState.createRandomCoinCounts(heapCount))
@@ -69,12 +94,14 @@ export default function GameBoard({gameMode, nextMover, heapCount: heapCountStr,
         setCoinCounts(GameState.createRandomCoinCounts(heapCount))
         setMovesLog([])
         setMoveNum(0)
+        setDisplayInstructions(false)
 
         setMover(nextMover)
     }
 
     if (!hm.coinsLeft()) {
-        const winner = (mover === 'COMPUTER') ? 'PLAYER' : 'COMPUTER'
+        // const winner = (mover === 'COMPUTER') ? 'PLAYER' : 'COMPUTER'
+        const winMessage = (mover === 'COMPUTER') ? 'You win! Congratulations!' : 'Computer wins. Try Again'
 
         return (
             <div className={'gameBoardContainer'}>
@@ -84,10 +111,13 @@ export default function GameBoard({gameMode, nextMover, heapCount: heapCountStr,
                         <TickerTape  movesLog={movesLog}/>
                     }
 
-                    <h2>{'------ GAME OVER -------'}</h2>
-                    <h2>{`------ WINNER IS: ${winner } -------`}</h2>
+                    {/*<h2>{'------ GAME OVER -------'}</h2>*/}
+                    {/*<h2>{`------ WINNER IS: ${winner } -------`}</h2>*/}
+                    <div id={'winMessage'} >
+                        <h1>{`${winMessage } `}</h1>
+                        <Button variant="primary" id={'playAgain'} size="lg" onClick={playAgain}>Play again</Button>
+                    </div>
 
-                    <Button variant="primary" id={'playAgain'} size="lg" onClick={playAgain}>Play again</Button>
                 </div>
             </div>
         )
@@ -98,7 +128,10 @@ export default function GameBoard({gameMode, nextMover, heapCount: heapCountStr,
     }
 
     return (
+
         <div className={'gameBoardContainer'}>
+            { displayInstructions && <DisplayInstructions /> }
+
             <div className={'gameBoard'}>
                 {
                     hm.heapNames.map((value, index) =>
