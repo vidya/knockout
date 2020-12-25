@@ -6,12 +6,17 @@ div.keyPad{
 
   display: flex;
   flex-direction: column;
+  flex-grow: unset;
+
   width: 60px;
-  height: 400px;
+  //height: 400px;
   margin-right: 8px;
 }
 
 h4.heapName {
+  flex: 1;
+  flex-grow: unset;
+
   border: 1px solid blue;
   background-color: gold;
   margin-block-start: 2px;
