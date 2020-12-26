@@ -5,7 +5,7 @@
 import React, { useState } from 'react'
 
 import CoinHeap from "../CoinHeap";
-import {Button} from "react-bootstrap";
+import {Button, ButtonGroup, ToggleButton} from "react-bootstrap";
 
 import './style.scss'
 import TickerTape from "../TickerTape";
@@ -38,10 +38,58 @@ const DisplayInstructions = () => (
     </div>
 )
 
+const FirstMover = ({chooseFirstMover}) => {
+    const [radioValue, setRadioValue] = useState('1');
 
+    const radios = [
+        { name: 'PLAYER', value: '1' },
+        { name: 'COMPUTER', value: '2' },
+    ];
+
+    const changeFirstMover = e => {
+        setRadioValue(e.currentTarget.value)
+
+        if (e.currentTarget.value === '1') {
+            chooseFirstMover('PLAYER')
+        }
+        else {
+            chooseFirstMover('COMPUTER')
+        }
+    }
+
+    return (
+        <>
+            <fieldset>
+                <legend>New First mover</legend>
+                <ButtonGroup toggle>
+                    {radios.map((radio, idx) => (
+                        <ToggleButton
+                            key={idx}
+                            className={'playerToggleButton'}
+                            type="radio"
+                            variant="secondary"
+                            name="radio"
+                            value={radio.value}
+                            checked={radioValue === radio.value}
+                            onChange={changeFirstMover}
+                        >
+                            {radio.name}
+                        </ToggleButton>
+                    ))}
+                </ButtonGroup>
+            </fieldset>
+        </>
+    );
+}
+
+
+// export default function GameBoard({gameMode, nextMover, heapCount: heapCountStr, setPlayAgain}) {
 export default function GameBoard({gameMode, nextMover, heapCount: heapCountStr, setPlayAgain}) {
     const [displayInstructions, setDisplayInstructions] = useState(true)
+
+    const [displayFirstMover, setDisplayFirstMover] = useState(true)
     const [mover, setMover] = useState(nextMover);
+    const [firstMover, setFirstMover] = useState('PLAYER');
 
     const heapCount = parseInt(heapCountStr)
     const [coinCounts, setCoinCounts] = useState(GameState.createRandomCoinCounts(heapCount))
@@ -51,6 +99,7 @@ export default function GameBoard({gameMode, nextMover, heapCount: heapCountStr,
 
     console.log(`GAME_BOARD: START --> GameBoard: start: (heapCount, mover) = (${heapCount}, ${mover})`)
     console.log(`--> GameBoard: start: (coinCounts) = ([${coinCounts})]`)
+    console.log(`--> GameBoard: start: (mover) = ([${mover})]`)
 
     const hm = new GameState({heapCount: heapCount, coinCounts: coinCounts})
 
@@ -69,6 +118,7 @@ export default function GameBoard({gameMode, nextMover, heapCount: heapCountStr,
         setCoinCounts([...Array(heapCount).keys()].map(n => newCoinCounts[n]))
         setMovesLog(newMovesLog)
         setMover('COMPUTER')
+        setDisplayFirstMover(false)
     }
 
     const makeComputerMove = () => {
@@ -90,11 +140,18 @@ export default function GameBoard({gameMode, nextMover, heapCount: heapCountStr,
         setMover('PLAYER')
     }
 
+    const chooseFirstMover = (choice) => {
+        setFirstMover(choice)
+        setMover(choice)
+        setDisplayFirstMover(false)
+    }
+
     const playAgain = () => {
         setCoinCounts(GameState.createRandomCoinCounts(heapCount))
         setMovesLog([])
         setMoveNum(0)
         setDisplayInstructions(false)
+        setDisplayFirstMover(true)
 
         setMover(nextMover)
     }
@@ -136,6 +193,7 @@ export default function GameBoard({gameMode, nextMover, heapCount: heapCountStr,
                 {
                     hm.heapNames.map((value, index) =>
                         <CoinHeap
+                            key={`${value}`}
                             name={`${value}`}
                             index={`${index}`}
                             coinCount={coinCounts[index]}
@@ -143,6 +201,16 @@ export default function GameBoard({gameMode, nextMover, heapCount: heapCountStr,
                     )
                 }
             </div>
+
+            { displayFirstMover &&
+                <div id={'firstMover'}>
+                <FirstMover chooseFirstMover={chooseFirstMover}/>
+                {/*<FirstMover chooseFirstMover={chooseFirstMover}/>*/}
+            </div>
+            }
+
+            <TickerTape  movesLog={movesLog}/>
+
 
             {/*{moveNum > 0 && <TickerTape  movesLog={movesLog}/>}*/}
             {

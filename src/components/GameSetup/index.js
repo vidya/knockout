@@ -188,7 +188,12 @@ export default function GameSetup() {
                         nextMover={firstMover}
                         heapCount={heapCount}
                         setPlayAgain={setPlayAgain}/>
+
                 </div>
+                {/*<div id={'firstMover'}>*/}
+                {/*    <FirstMover chooseFirstMover={chooseFirstMover}/>*/}
+                {/*</div>*/}
+
             </div>
         );
     } else {
