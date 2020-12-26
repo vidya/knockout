@@ -209,7 +209,9 @@ export default function GameBoard({gameMode, nextMover, heapCount: heapCountStr,
             </div>
             }
 
-            <TickerTape  movesLog={movesLog}/>
+            <div id={`tickerTapeDiv`}>
+                <TickerTape  movesLog={movesLog}/>
+            </div>
 
 
             {/*{moveNum > 0 && <TickerTape  movesLog={movesLog}/>}*/}
