@@ -60,7 +60,7 @@ const FirstMover = ({chooseFirstMover}) => {
     return (
         <>
             <fieldset>
-                <legend>New First mover</legend>
+                <legend>First mover</legend>
                 <ButtonGroup toggle>
                     {radios.map((radio, idx) => (
                         <ToggleButton

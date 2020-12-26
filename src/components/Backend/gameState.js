@@ -62,7 +62,8 @@ export default class GameState {
     }
 
     coinCountStr(coinCounts) {
-        const str = coinCounts.map((v, index) => `${this.heapNames[index]}${v}`).join("-")
+        // const str = coinCounts.map((v, index) => `${this.heapNames[index]}${v}`).join("-")
+        const str = coinCounts.map((v, index) => `${this.heapNames[index]}${v}`).join(" | ")
         console.log(`coinCountStr(): (coinCounts, str) = ([${coinCounts}], ${str})`)
 
         return str
